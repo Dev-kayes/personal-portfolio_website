@@ -1,0 +1,21 @@
+{
+  "name": "portfolio-app",
+  "version": "1.0.0",
+  "description": "This is the portfolio website for my own",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "kayes molla",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+    "mongoose": "^9.10.3",
+    "nodemon": "^3.1.14"
+  }
+}
