@@ -46,3 +46,37 @@ export const registerUser = async (req, res) => {
       .json({ success: false, message: "Server error!", data: error });
   }
 };
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if ((!email, !password)) {
+      res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
+    }
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid credentials" });
+    }
+    const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    return res
+      .status(200)
+      .json({ success: true, message: "User logged in", data: user, token });
+  } catch (error) {
+    console.error(error, "in login user");
+    res
+      .status(500)
+      .json({ success: false, message: "Server error!", data: error });
+  }
+};
