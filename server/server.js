@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import connectDb from "./config/mongoDb.connec.js";
 import authRouter from "./routes/auth.routes.js";
+import userRoute from "./routes/user.routes.js";
 connectDb();
 const app = express();
 // middlewares:
@@ -15,7 +16,10 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// Auth Router:
 app.use("/api/auth", authRouter);
+// User Router:
+app.use("/api/user", userRoute);
 
 if (process.env.NODE_ENV === "development") {
   app.listen(process.env.PORT, () => {
