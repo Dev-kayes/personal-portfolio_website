@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 
 export const isAuth = (req, res, next) => {
-  console.log("is middleware work?");
   try {
     const token = req.headers.authorization.split(" ")[1];
     if (!token)

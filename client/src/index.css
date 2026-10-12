@@ -1,1 +1,5 @@
 @import "tailwindcss";
+body {
+  background-color: rgb(15, 7, 7);
+  color: whitesmoke;
+}

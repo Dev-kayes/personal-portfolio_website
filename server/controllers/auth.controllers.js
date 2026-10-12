@@ -9,8 +9,8 @@ export const testApi = (req, res) => {
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    if ((!name, !email, !password)) {
-      res
+    if (!name || !email || !password) {
+      return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
@@ -33,7 +33,7 @@ export const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
     return res
@@ -50,8 +50,8 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if ((!email, !password)) {
-      res
+    if (!email || !password) {
+      return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
@@ -67,7 +67,7 @@ export const loginUser = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Invalid credentials" });
     }
-    const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
     return res

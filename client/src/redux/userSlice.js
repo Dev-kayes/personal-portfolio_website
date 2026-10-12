@@ -9,6 +9,7 @@ const userSlice = createSlice({
   reducers: {
     setUserData: (state, action) => {
       state.userData = action.payload;
+      // console.log(state.userData);
     },
     setToken: (state, action) => {
       state.token = action.payload;
@@ -20,4 +21,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { setUserData, setToken } = userSlice.actions;
+export const { setUserData, setToken, setLoading } = userSlice.actions;
