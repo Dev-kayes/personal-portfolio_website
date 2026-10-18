@@ -6,6 +6,7 @@ export const testApi = (req, res) => {
   res.status(200).json({ message: "API is working" });
 };
 
+// http://localhost:3000/api/auth/register
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -47,6 +48,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+// http://localhost:3000/api/auth/login
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -70,6 +72,8 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
+    // console.log("NEW LOGIN TOKEN:", token);
+    // console.log("LOGIN TOKEN EXPIRY:", new Date(jwt.decode(token).exp * 1000));
     return res
       .status(200)
       .json({ success: true, message: "User logged in", data: user, token });

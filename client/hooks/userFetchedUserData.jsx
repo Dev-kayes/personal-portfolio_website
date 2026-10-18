@@ -33,6 +33,8 @@ const useFetchedUserData = () => {
       } catch (error) {
         console.error(error);
         dispatch(setLoading(false));
+      } finally {
+        dispatch(setLoading(false));
       }
     };
     fetchedUserData();

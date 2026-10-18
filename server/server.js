@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import connectDb from "./config/mongoDb.connec.js";
 import authRouter from "./routes/auth.routes.js";
@@ -28,7 +26,11 @@ app.use(express.urlencoded({ extended: true }));
 
 connectDb();
 
+// Auth:
+// http://localhost:3000/api/auth
 app.use("/api/auth", authRouter);
+// User:
+// http://localhost:3000/api/user
 app.use("/api/user", userRoute);
 
 if (process.env.NODE_ENV === "development") {
