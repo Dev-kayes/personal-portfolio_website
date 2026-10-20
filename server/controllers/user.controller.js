@@ -22,10 +22,18 @@ export const getCurrentUser = async (req, res) => {
 
 // http://localhost:3000/api/user/update-profile
 export const updateProfile = async (req, res) => {
-  const user = await UserModel.findById(req.userId);
   try {
     const userId = req.userId;
-    let {
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const {
       name,
       phone,
       whatsAppNumber,
@@ -44,29 +52,13 @@ export const updateProfile = async (req, res) => {
       youtube,
       isAvailable,
     } = req.body;
-    await UserModel.findById(userId);
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+
+    let profilePic = user.profilePic;
+    if (req.file?.buffer) {
+      profilePic = await uploadOnCloudinary(req.file.buffer);
     }
 
-    let profilePic;
-    profilePic = user.profilePic;
-
-    try {
-      if (req.file && req.file.buffer) {
-        profilePic = await uploadOnCloudinary(req.file.buffer);
-      }
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-        error: "Error while uploading Profile picture!",
-      });
-    }
-
-    await UserModel.findByIdAndUpdate(
+    const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       {
         name,
@@ -86,16 +78,25 @@ export const updateProfile = async (req, res) => {
         twitter,
         youtube,
         profilePic,
-        isAvailable,
-        //: isAvailable === true ? true : false,
+        isAvailable: isAvailable === true || isAvailable === "true",
       },
-      { new: true, runValidators: true },
+      {
+        new: true,
+        runValidators: true,
+      },
     );
-    return res
-      .status(200)
-      .json({ success: true, message: "Updated successfully" });
+
+    return res.status(200).json({
+      success: true,
+      message: "Updated successfully",
+      data: updatedUser,
+    });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.error("Update profile error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+    });
   }
 };

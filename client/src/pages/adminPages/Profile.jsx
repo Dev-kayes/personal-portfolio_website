@@ -1,30 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+
+const initialProfileData = {
+  name: "",
+  phone: "",
+  whatsAppNumber: "",
+  address: "",
+  city: "",
+  state: "",
+  country: "",
+  PostalCode: "",
+  title: "",
+  intro: "",
+  description: "",
+  github: "",
+  linkedIn: "",
+  instagram: "",
+  facebook: "",
+  twitter: "",
+  youtube: "",
+};
+
+const defaultProfilePicPreview =
+  "https://cdn.vectorstock.com/i/1000v/41/91/avatar-default-user-profile-icon-simple-flat-grey-vector-57234191.jpg";
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState({
-    name: "",
-    phone: "",
-    whatsAppNumber: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    PostalCode: "",
-    title: "",
-    intro: "",
-    description: "",
-    github: "",
-    linkedIn: "",
-    instagram: "",
-    facebook: "",
-    twitter: "",
-    youtube: "",
-  });
+  const [profileData, setProfileData] = useState(initialProfileData);
   const [isAvailable, setIsAvailable] = useState(true);
   const [profilePic, setProfilePic] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [profilePicPreview, setProfilePicPreview] = useState(
-    "https://cdn.vectorstock.com/i/1000v/41/91/avatar-default-user-profile-icon-simple-flat-grey-vector-57234191.jpg",
+    defaultProfilePicPreview,
   );
+  const profilePicInputRef = useRef(null);
 
   useEffect(
     () => () => {
@@ -74,7 +83,54 @@ const Profile = () => {
     ["twitter", "Twitter"],
     ["youtube", "YouTube"],
   ];
-  const handleSaveBtn = (e) => {};
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      // console.log(profileData);
+      // console.log(profilePicPreview);
+      // console.log(isAvailable);
+
+      const formData = new FormData();
+      Object.entries(profileData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+      if (profilePic) {
+        formData.append("profile", profilePic);
+      }
+      formData.append("isAvailable", isAvailable);
+
+      const response = await axios.put(
+        `${import.meta.env.VITE_SERVER_URI}/api/user/update-profile`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+      if (response?.data?.success) {
+        toast.success(
+          response?.data?.message || "Profile updated successfully",
+        );
+        setProfileData(initialProfileData);
+        setIsAvailable(true);
+        setProfilePic(null);
+        setProfilePicPreview(defaultProfilePicPreview);
+        setLoading(false);
+      }
+      if (profilePicInputRef.current) {
+        profilePicInputRef.current.value = "";
+      }
+      setLoading(false);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "something went wrong");
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="space-y-6">
@@ -85,30 +141,28 @@ const Profile = () => {
         </p>
       </div>
 
-      <label className="flex flex-col gap-2 text-sm text-zinc-300">
-        <span>Profile picture</span>
-        <input
-          type="file"
-          name="profilePic"
-          accept="image/*"
-          onChange={handleProfilePicChange}
-          className="rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-zinc-100 file:mr-3 file:rounded-md file:border-0 file:bg-zinc-700 file:px-3 file:py-1 file:text-zinc-100"
-        />
-        {profilePic && (
-          <span className="text-xs text-zinc-400">{profilePic.name}</span>
-        )}
-        {profilePicPreview && (
-          <img
-            src={profilePicPreview}
-            alt="Selected profile picture preview"
-            className="h-24 w-24 rounded-full object-cover"
+      <form className="grid gap-5 " onSubmit={onSubmitHandler}>
+        <label className="flex flex-col gap-2 text-sm text-zinc-300">
+          <span>Profile picture</span>
+          <input
+            type="file"
+            name="profilePic"
+            accept="image/*"
+            ref={profilePicInputRef}
+            onChange={handleProfilePicChange}
+            className="rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-zinc-100 file:mr-3 file:rounded-md file:border-0 file:bg-zinc-700 file:px-3 file:py-1 file:text-zinc-100"
           />
-        )}
-      </label>
-      <form
-        className="grid gap-5 sm:grid-cols-2"
-        onSubmit={(event) => event.preventDefault()}
-      >
+          {profilePic && (
+            <span className="text-xs text-zinc-400">{profilePic.name}</span>
+          )}
+          {profilePicPreview && (
+            <img
+              src={profilePicPreview}
+              alt="Selected profile picture preview"
+              className="h-24 w-24 rounded-full object-cover"
+            />
+          )}
+        </label>
         {profileFields.map(([name, label]) => (
           <label
             key={name}
@@ -135,8 +189,8 @@ const Profile = () => {
           />
           Available for work
         </label>
+        <button type="submit">{loading ? "Saving..." : "Save"}</button>
       </form>
-      <button onClick={() => handleSaveBtn}>Save</button>
     </section>
   );
 };
