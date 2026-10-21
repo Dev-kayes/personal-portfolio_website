@@ -5,6 +5,7 @@ import cors from "cors";
 import connectDb from "./config/mongoDb.connec.js";
 import authRouter from "./routes/auth.routes.js";
 import userRoute from "./routes/user.routes.js";
+import skillRoute from "./routes/skill.routes.js";
 
 const app = express();
 
@@ -32,6 +33,10 @@ app.use("/api/auth", authRouter);
 // User:
 // http://localhost:3000/api/user
 app.use("/api/user", userRoute);
+
+// Skills:
+// http://localhost:3000/api/skill
+app.use("/api/skill", skillRoute);
 
 if (process.env.NODE_ENV === "development") {
   app.listen(process.env.PORT || 9000, () => {
