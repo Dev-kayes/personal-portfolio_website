@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../../redux/userSlice";
 import {
   FiCamera,
   FiSave,
@@ -34,12 +36,14 @@ const defaultProfilePicPreview =
   "https://cdn.vectorstock.com/i/1000v/41/91/avatar-default-user-profile-icon-simple-flat-grey-vector-57234191.jpg";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.userData);
   const [profileData, setProfileData] = useState(initialProfileData);
   const [isAvailable, setIsAvailable] = useState(true);
   const [profilePic, setProfilePic] = useState(null);
   const [loading, setLoading] = useState(false);
   const [profilePicPreview, setProfilePicPreview] = useState(
-    defaultProfilePicPreview,
+    userData?.profilePic || defaultProfilePicPreview,
   );
   const profilePicInputRef = useRef(null);
 
@@ -70,7 +74,7 @@ const Profile = () => {
     setProfilePicPreview(
       selectedProfilePic
         ? URL.createObjectURL(selectedProfilePic)
-        : defaultProfilePicPreview,
+        : userData?.profilePic || defaultProfilePicPreview,
     );
   };
 
@@ -98,12 +102,22 @@ const Profile = () => {
         },
       );
       if (response?.data?.success) {
+        const updatedUser = response.data.data;
+        if (updatedUser) {
+          dispatch(setUserData(updatedUser));
+        }
+        setProfilePic(null);
+        setProfilePicPreview(
+          updatedUser?.profilePic ||
+            userData?.profilePic ||
+            defaultProfilePicPreview,
+        );
+        if (profilePicInputRef.current) {
+          profilePicInputRef.current.value = "";
+        }
         toast.success(
           response?.data?.message || "Profile updated successfully",
         );
-      }
-      if (profilePicInputRef.current) {
-        profilePicInputRef.current.value = "";
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");

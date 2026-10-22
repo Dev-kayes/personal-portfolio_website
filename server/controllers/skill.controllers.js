@@ -16,13 +16,13 @@ export const addSkill = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
     if (!skillName || !skillLevel) {
-      res.status(400).json({
+    return  res.status(400).json({
         success: false,
         message: "All fields are required",
       });
     }
     if (!req.file) {
-      res.status(400).json({
+     return res.status(400).json({
         success: false,
         message: "Image is required",
       });
