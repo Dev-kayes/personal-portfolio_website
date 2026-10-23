@@ -14,10 +14,20 @@ skillRoute.post("/add-skill", isAuth, upload.single("skillImage"), addSkill);
 
 // delete skill:
 // http://localhost:3000/api/skill/delete-skill
-skillRoute.delete("/delete-skill/:id", isAuth, deleteSkill);
+skillRoute.delete(
+  "/delete-skill/:id",
+  isAuth,
+  upload.single("skillImage"),
+  deleteSkill,
+);
 
 // get all skill:
 // http://localhost:3000/api/skill/get-all-skill
-skillRoute.get("/get-all-skill", isAuth, getAllSkillByAdmin);
+skillRoute.get(
+  "/get-all-skill",
+  isAuth,
+  upload.single("skillImage"),
+  getAllSkillByAdmin,
+);
 
 export default skillRoute;

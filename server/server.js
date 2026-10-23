@@ -6,6 +6,7 @@ import connectDb from "./config/mongoDb.connec.js";
 import authRouter from "./routes/auth.routes.js";
 import userRoute from "./routes/user.routes.js";
 import skillRoute from "./routes/skill.routes.js";
+import projectRoute from "./routes/project.routes.js";
 
 const app = express();
 
@@ -38,6 +39,11 @@ app.use("/api/user", userRoute);
 // http://localhost:3000/api/skill
 app.use("/api/skill", skillRoute);
 
+// Projects:
+// http://localhost:3000/api/projects
+app.use("/api/projects", projectRoute);
+
+//=====================================================================
 if (process.env.NODE_ENV === "development") {
   app.listen(process.env.PORT || 9000, () => {
     console.log("Server is running");
