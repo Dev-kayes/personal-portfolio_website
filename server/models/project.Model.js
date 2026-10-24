@@ -17,7 +17,7 @@ const projectSchema = new mongoose.Schema(
     },
     projectImage: {
       type: String,
-      //   required: true,
+      required: true,
     },
     gitHub: {
       type: String,

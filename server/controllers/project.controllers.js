@@ -3,7 +3,7 @@ import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
 import projectModel from "./../models/project.Model.js";
 
 // http://localhost:3000/api/projects/add
-//https://kayesbackend.vercel.app/api/projects/add
+// https://kayesbackend.vercel.app/api/projects/add
 export const addProject = async (req, res) => {
   try {
     const userId = req.userId;
@@ -31,8 +31,8 @@ export const addProject = async (req, res) => {
         "portfolio_profiles",
       );
     } catch (error) {
-      res
-        .statue(500)
+      return res
+        .status(500)
         .json({ success: false, message: "Error in uploading Image!" });
     }
     const project = await projectModel.create({
@@ -48,10 +48,13 @@ export const addProject = async (req, res) => {
       .json({ success: true, message: "Project Added!", data: project });
   } catch (error) {
     console.error(error, "error in add Project");
-    res.status(500).json({ success: false, message: "Internal server error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
   }
 };
 // http://localhost:3000/api/projects/delete-projects
+// https://kayesbackend.vercel.app/api/projects/delete-projects/:projectId
 export const deleteProject = async (req, res) => {
   try {
     const userId = req.userId;
@@ -76,16 +79,20 @@ export const deleteProject = async (req, res) => {
 };
 
 // http://localhost:3000/api/projects/get-admin-projects
+// https://kayesbackend.vercel.app/api/projects/get-admin-projects
 export const getAdminProject = async (req, res) => {
   try {
     const userId = req.userId;
+    console.log(userId);
     const user = await UserModel.findById(userId);
+    console.log(user);
     if (!user) {
       return res
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-    const projects = await projectModel.find(userId);
+    const projects = await projectModel.find({ userId });
+    console.log(projects);
     return res.status(200).json({ success: true, projects });
   } catch (error) {
     console.error(error, "error in getAdminProject");

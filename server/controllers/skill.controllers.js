@@ -3,6 +3,7 @@ import SkillModel from "./../models/skill.Model.js";
 import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
 
 // http://localhost:3000/api/skill/add-skill
+// https://kayesbackend.vercel.app/api/skill/add-skill
 export const addSkill = async (req, res) => {
   try {
     const userId = req.userId;
@@ -16,13 +17,13 @@ export const addSkill = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
     if (!skillName || !skillLevel) {
-    return  res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "All fields are required",
       });
     }
     if (!req.file) {
-     return res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Image is required",
       });
@@ -55,6 +56,7 @@ export const addSkill = async (req, res) => {
 };
 
 // http://localhost:3000/api/skill/delete-skill
+// https://kayesbackend.vercel.app/api/skill/delete-skill/:id
 export const deleteSkill = async (req, res) => {
   try {
     const userId = req.userId;
@@ -81,6 +83,7 @@ export const deleteSkill = async (req, res) => {
 };
 
 // http://localhost:3000/api/skill/get-all-skill
+// https://kayesbackend.vercel.app/api/skill/get-all-skill
 export const getAllSkillByAdmin = async (req, res) => {
   try {
     const userId = req.userId;

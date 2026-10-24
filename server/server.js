@@ -30,17 +30,21 @@ connectDb();
 
 // Auth:
 // http://localhost:3000/api/auth
+// https://kayesbackend.vercel.app/api/auth
 app.use("/api/auth", authRouter);
 // User:
 // http://localhost:3000/api/user
+// https://kayesbackend.vercel.app/api/user
 app.use("/api/user", userRoute);
 
 // Skills:
 // http://localhost:3000/api/skill
+// https://kayesbackend.vercel.app/api/skill
 app.use("/api/skill", skillRoute);
 
 // Projects:
 // http://localhost:3000/api/projects
+// https://kayesbackend.vercel.app/api/projects
 app.use("/api/projects", projectRoute);
 
 //=====================================================================

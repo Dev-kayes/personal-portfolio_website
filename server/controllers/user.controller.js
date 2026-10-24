@@ -2,6 +2,7 @@ import UserModel from "../models/user.Model.js";
 import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
 
 // http://localhost:3000/api/user/current-user
+// https://kayesbackend.vercel.app/api/user/current-user
 export const getCurrentUser = async (req, res) => {
   try {
     const userId = req.userId;
@@ -21,6 +22,7 @@ export const getCurrentUser = async (req, res) => {
 };
 
 // http://localhost:3000/api/user/update-profile
+// https://kayesbackend.vercel.app/api/user/update-profile
 export const updateProfile = async (req, res) => {
   try {
     const userId = req.userId;

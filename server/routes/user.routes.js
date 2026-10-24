@@ -9,10 +9,12 @@ const userRoute = express.Router();
 
 // current user:
 // http://localhost:3000/api/user/current-user
+// https://kayesbackend.vercel.app/api/user/current-user
 userRoute.get("/current-user", isAuth, getCurrentUser);
 
 // update user:
 // http://localhost:3000/api/user/update-profile
+// https://kayesbackend.vercel.app/api/user/update-profile
 userRoute.put(
   "/update-profile",
   isAuth,
