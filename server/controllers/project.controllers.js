@@ -9,7 +9,7 @@ export const addProject = async (req, res) => {
     const userId = req.userId;
     const user = await UserModel.findById(userId);
     const { title, description, gitHub, live } = req.body;
-    if ((!title, !description)) {
+    if (!title || !description) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required!" });
@@ -21,12 +21,14 @@ export const addProject = async (req, res) => {
     }
     let projectImage;
     if (!req.file) {
-      res.status(400).json({ success: false, message: "Please upload a file" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Please upload a file" });
     }
     try {
       projectImage = await uploadOnCloudinary(
         req.file.buffer,
-        "project-images",
+        "portfolio_profiles",
       );
     } catch (error) {
       res
