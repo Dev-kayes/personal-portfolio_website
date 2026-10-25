@@ -65,9 +65,14 @@ export const deleteProject = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-    const project = await projectModel.findByIdAndDelete({ _id: projectId });
+    const project = await projectModel.findOneAndDelete({
+      _id: projectId,
+      userId,
+    });
     if (!project) {
-      res.status(404).json({ success: false, message: "Project Not Found!" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Project Not Found!" });
     }
     res
       .status(200)

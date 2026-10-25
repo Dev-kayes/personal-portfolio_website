@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const skillSchema = new mongoose.Schema(
+const skillSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,

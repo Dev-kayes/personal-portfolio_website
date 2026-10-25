@@ -14,7 +14,7 @@ const projectRoute = express.Router();
 projectRoute.post("/add", isAuth, upload.single("projectImage"), addProject);
 
 // Delete projects:
-// http://localhost:3000/api/projects/delete-projects
+// http://localhost:3000/api/projects/delete-projects/:projectId
 // https://kayesbackend.vercel.app/api/projects/delete-projects/:projectId
 projectRoute.delete("/delete-projects/:projectId", isAuth, deleteProject);
 //GET-admin-projects:

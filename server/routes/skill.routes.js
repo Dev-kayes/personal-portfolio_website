@@ -14,7 +14,7 @@ const skillRoute = express.Router();
 skillRoute.post("/add-skill", isAuth, upload.single("skillImage"), addSkill);
 
 // delete skill:
-// http://localhost:3000/api/skill/delete-skill
+// http://localhost:3000/api/skill/delete-skill/:id
 // https://kayesbackend.vercel.app/api/skill/delete-skill/:id
 skillRoute.delete(
   "/delete-skill/:id",
