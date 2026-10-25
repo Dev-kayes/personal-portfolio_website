@@ -18,8 +18,8 @@ experienceRoute.post("/add-exp", isAuth, addExperience);
 experienceRoute.get("/get-admin-exp", isAuth, getAdminExperience);
 
 // Delete experience:
-// http://localhost:3000/api/experience/del-exp
-// https://kayesbackend.vercel.app/api/experience/del-exp
-experienceRoute.delete("/del-exp", isAuth, deleteExperience);
+// http://localhost:3000/api/experience/del-exp/:expId
+// https://kayesbackend.vercel.app/api/experience/del-exp/:expId
+experienceRoute.delete("/del-exp/:expId", isAuth, deleteExperience);
 
 export default experienceRoute;
