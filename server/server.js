@@ -8,6 +8,7 @@ import userRoute from "./routes/user.routes.js";
 import skillRoute from "./routes/skill.routes.js";
 import projectRoute from "./routes/project.routes.js";
 import experienceRoute from "./routes/experience.routes.js";
+import educationRoute from "./routes/education.routes.js";
 
 const app = express();
 
@@ -52,6 +53,11 @@ app.use("/api/projects", projectRoute);
 // http://localhost:3000/api/experience
 // https://kayesbackend.vercel.app/api/experience
 app.use("/api/experience", experienceRoute);
+
+// Education:
+// http://localhost:3000/api/education
+// https://kayesbackend.vercel.app/api/education
+app.use("/api/education", educationRoute);
 
 //=====================================================================
 if (process.env.NODE_ENV === "development") {
