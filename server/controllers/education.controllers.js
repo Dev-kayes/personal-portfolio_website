@@ -60,7 +60,7 @@ export const deleteEduction = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-    const education = await eduModel.findByIdAndDelete({
+    const education = await eduModel.findOneAndDelete({
       _id: educationId,
       userId,
     });

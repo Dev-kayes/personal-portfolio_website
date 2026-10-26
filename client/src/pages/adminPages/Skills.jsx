@@ -15,6 +15,7 @@ import {
 const Skills = () => {
   const fetchedSkills = useFetchedSkills();
   const { skills } = useSelector((state) => state.user);
+  console.log(skills);
 
   const [previewImage, setPreviewImage] = useState(null);
   const [skillImage, setSkillImage] = useState(null);
