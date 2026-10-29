@@ -13,16 +13,68 @@ import Skills from "./pages/adminPages/Skills";
 import Education from "./pages/adminPages/Education";
 import Achievements from "./pages/adminPages/Achievements";
 
+// Client Component Imports
+import ClientBanner from "./pages/clientPages/ClientBanner";
+import ClientNavbar from "./components/clientComponents/ClientNavbar";
+
+// Function for Background Image rotation:
+function GalaxyBackground() {
+  return (
+    <div className="galaxy-background" aria-hidden="true">
+      <img src="/galaxy.png" alt="" />
+    </div>
+  );
+}
+
+// Local Wrapper Component for your public portfolio view
+const ClientLayout = () => {
+  return (
+    <div className="text-slate-100 min-h-screen">
+      {/* Sticky Navigation */}
+      <ClientNavbar />
+
+      {/* Main Page Content */}
+      <main className="pt-20">
+        <section id="home" className="scroll-mt-24">
+          <ClientBanner />
+        </section>
+
+        {/* Add placeholders for future sections as you build them */}
+        <section id="about" className="scroll-mt-24 p-8 min-h-[50vh]">
+          <h2 className="text-2xl font-bold">About Me</h2>
+        </section>
+
+        <section id="projects" className="scroll-mt-24 p-8 min-h-[50vh]">
+          <h2 className="text-2xl font-bold">Projects</h2>
+        </section>
+
+        <section id="experience" className="scroll-mt-24 p-8 min-h-[50vh]">
+          <h2 className="text-2xl font-bold">Experience</h2>
+        </section>
+
+        <section id="contact" className="scroll-mt-24 p-8 min-h-[50vh]">
+          <h2 className="text-2xl font-bold">Contact</h2>
+        </section>
+      </main>
+    </div>
+  );
+};
+
 const App = () => {
   const token = localStorage.getItem("token");
   useFetchedUserData();
+
   return (
     <>
+      <GalaxyBackground />
       <Toaster />
       <Routes>
+        {/* Public Portfolio Page */}
+        <Route path="/" element={<ClientLayout />} />
+
+        {/* Admin Dashboard Routes */}
         <Route path="/admin" element={<Home />}>
           <Route index element={<Navigate to="dashboard" replace />} />
-
           <Route path="dashboard" element={<DashBoard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="projects" element={<Projects />} />
@@ -32,6 +84,7 @@ const App = () => {
           <Route path="achievements" element={<Achievements />} />
         </Route>
 
+        {/* Auth Routes */}
         <Route path="/admin/login" element={<Login />} />
         <Route path="/admin/register" element={<Register />} />
       </Routes>

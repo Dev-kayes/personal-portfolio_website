@@ -43,7 +43,7 @@ const navGroups = [
         icon: LuFolderKanban,
       },
       {
-        name: "Experience",
+        name: "Experiences",
         path: "/admin/experience",
         icon: LuBriefcase,
       },
@@ -53,12 +53,12 @@ const navGroups = [
         icon: LuWrench,
       },
       {
-        name: "Education",
+        name: "Educations",
         path: "/admin/education",
         icon: LuGraduationCap,
       },
       {
-        name: "Achievements",
+        name: "Achievements & certification",
         path: "/admin/achievements",
         icon: LuTrophy,
       },

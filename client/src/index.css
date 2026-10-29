@@ -3,3 +3,66 @@ body {
   background-color: rgb(15, 7, 7);
   color: whitesmoke;
 }
+/* ========================================
+   FULL-SCREEN GALAXY BACKGROUND
+======================================== */
+
+.galaxy-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: #000;
+  isolation: isolate;
+}
+
+/* Oversized image prevents edges showing during rotation */
+.galaxy-background img {
+  position: absolute;
+  display: block;
+
+  width: 200vmax;
+  height: 200vmax;
+
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+
+  left: 50%;
+  top: 50%;
+
+  opacity: 0.7;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+
+  animation: galaxy-rotate 240s linear infinite;
+  will-change: transform;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Continuous rotation */
+@keyframes galaxy-rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Keep background behind the website content */
+.galaxy-background ~ * {
+  position: relative;
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+  .galaxy-background img {
+    animation: none;
+    will-change: auto;
+  }
+}
