@@ -1,14 +1,7 @@
 import express from "express";
-import {
-  loginUser,
-  registerUser,
-  testApi,
-} from "../controllers/auth.controllers.js";
+import { loginUser, registerUser } from "../controllers/auth.controllers.js";
 const authRouter = express.Router();
-// testing
-// http://localhost:3000/api/auth/test
-//https://kayesbackend.vercel.app/api/auth/test
-authRouter.get("/test", testApi);
+
 // register
 // http://localhost:3000/api/auth/register
 // https://kayesbackend.vercel.app/api/auth/register

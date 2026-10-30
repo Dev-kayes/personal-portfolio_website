@@ -2,21 +2,33 @@ import UserModel from "../models/user.Model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const testApi = (req, res) => {
-  res.status(200).json({ message: "API is working" });
-};
-
 // http://localhost:3000/api/auth/register
 export const registerUser = async (req, res) => {
   try {
+    if (process.env.ALLOW_ADMIN_REGISTER !== "true") {
+      return res.status(403).json({
+        success: false,
+        message: "Admin registration is disabled",
+      });
+    }
+    const existingAdmin = await UserModel.findOne({ role: "admin" });
+
+    if (existingAdmin) {
+      return res.status(409).json({
+        success: false,
+        message: "Admin account already exists",
+      });
+    }
     const { name, email, password } = req.body;
+    name = name.trim;
+    email = email.trim.toLowerCase();
     if (!name || !email || !password) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
     if (password.length < 6) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Password must be at least 6 characters",
       });
@@ -24,7 +36,7 @@ export const registerUser = async (req, res) => {
     const existingEmail = await UserModel.findOne({ email });
     if (existingEmail) {
       return res
-        .status(400)
+        .status(409)
         .json({ success: false, message: "Email already exists" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -35,11 +47,16 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
     });
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    return res
-      .status(200)
-      .json({ success: true, message: "User registered", data: user, token });
+    const userData = user.toObject();
+    delete userData.password;
+    return res.status(200).json({
+      success: true,
+      message: "User registered",
+      data: userData,
+      token,
+    });
   } catch (error) {
-    console.error(error, "in register user");
+    console.error(error, "Error in register user");
     res
       .status(500)
       .json({ success: false, message: "Server error!", data: error });
@@ -55,6 +72,7 @@ export const loginUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
+    email = email.trim().toLowerCase();
     const user = await UserModel.findOne({ email });
     if (!user) {
       return res
@@ -67,11 +85,15 @@ export const loginUser = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Invalid credentials" });
     }
+
+    if (user !== "admin") return res.status(403).json("Access Denied");
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    // console.log("NEW LOGIN TOKEN:", token);
-    // console.log("LOGIN TOKEN EXPIRY:", new Date(jwt.decode(token).exp * 1000));
+    const userData = user.toObject();
+    delete userData.password;
+
     return res
       .status(200)
       .json({ success: true, message: "User logged in", data: user, token });

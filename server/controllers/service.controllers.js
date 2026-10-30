@@ -1,8 +1,10 @@
-import serviceModel from "../models/services.Model";
-import UserModel from "../models/user.Model";
-import uploadOnCloudinary from "../utils/uploadOnCloudinary";
-import serviceModel from "./../models/services.Model";
+import serviceModel from "../models/services.Model.js";
+import UserModel from "../models/user.Model.js";
+import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
 
+// Add-service:
+// http://localhost:3000/api/service/add-service
+// https://kayesbackend.vercel.app/api/service/add-service
 export const addService = async (req, res) => {
   try {
     const userId = req.userId;
