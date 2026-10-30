@@ -20,6 +20,6 @@ serviceRouter.delete("/del-service/:serviceId", isAuth, deleteService);
 // Get-Admin-service:
 // http://localhost:3000/api/service/get-admin-service
 // https://kayesbackend.vercel.app/api/service/get-admin-service
-serviceRouter.delete("/get-admin-service", isAuth, getAdminService);
+serviceRouter.get("/get-admin-service", isAuth, getAdminService);
 
 export default serviceRouter;
