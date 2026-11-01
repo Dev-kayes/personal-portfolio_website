@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate, Route, Routes } from "react-router";
 import Home from "./pages/adminPages/Home";
 import Login from "./pages/adminPages/Login";
@@ -16,6 +15,7 @@ import Achievements from "./pages/adminPages/Achievements";
 // Client Component Imports
 import ClientBanner from "./pages/clientPages/ClientBanner";
 import ClientNavbar from "./components/clientComponents/ClientNavbar";
+import SkillsSection from "./pages/clientPages/SkillsSection";
 
 // Function for Background Image rotation:
 function GalaxyBackground() {
@@ -39,7 +39,6 @@ const ClientLayout = () => {
           <ClientBanner />
         </section>
 
-        {/* Add placeholders for future sections as you build them */}
         <section id="about" className="scroll-mt-24 p-8 min-h-[50vh]">
           <h2 className="text-2xl font-bold">About Me</h2>
         </section>
@@ -52,6 +51,10 @@ const ClientLayout = () => {
           <h2 className="text-2xl font-bold">Experience</h2>
         </section>
 
+        <section id="skills" className="scroll-mt-24">
+          <SkillsSection />
+        </section>
+
         <section id="contact" className="scroll-mt-24 p-8 min-h-[50vh]">
           <h2 className="text-2xl font-bold">Contact</h2>
         </section>
@@ -61,7 +64,6 @@ const ClientLayout = () => {
 };
 
 const App = () => {
-  const token = localStorage.getItem("token");
   useFetchedUserData();
 
   return (

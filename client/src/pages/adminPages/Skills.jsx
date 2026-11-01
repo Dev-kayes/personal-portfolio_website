@@ -3,27 +3,18 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import useFetchedSkills from "../../../hooks/useFetchedSkills";
 import { useSelector } from "react-redux";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  FiPlus,
-  FiTrash2,
-  FiUploadCloud,
-  FiCpu,
-  FiAlertCircle,
-} from "react-icons/fi";
+import { motion } from "framer-motion";
+import { FiPlus, FiUploadCloud, FiCpu } from "react-icons/fi";
 
 const Skills = () => {
   const fetchedSkills = useFetchedSkills();
   const { skills } = useSelector((state) => state.user);
-  console.log(skills);
 
   const [previewImage, setPreviewImage] = useState(null);
   const [skillImage, setSkillImage] = useState(null);
-  const [skillLevel, setSkillLevel] = useState("");
   const [skillName, setSkillName] = useState("");
+  const [skillSection, setSkillSection] = useState("FrontEnd");
   const [loading, setLoading] = useState(false);
-  const [deletingId, setDeletingId] = useState(null);
-  const [deleteConfirmId, setDeleteConfirmId] = useState(null);
 
   const handleFileChange = (e) => {
     const file = e.target?.files?.[0];
@@ -53,7 +44,7 @@ const Skills = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!skillName.trim() || !skillImage || skillLevel === "") {
+    if (!skillName.trim() || !skillImage || !skillSection) {
       toast.error("Please fill in all fields and upload a skill icon.");
       return;
     }
@@ -61,7 +52,7 @@ const Skills = () => {
     const formData = new FormData();
     formData.append("skillName", skillName.trim());
     formData.append("skillImage", skillImage);
-    formData.append("skillLevel", skillLevel);
+    formData.append("skillSection", skillSection);
 
     setLoading(true);
     try {
@@ -81,7 +72,7 @@ const Skills = () => {
         fetchedSkills();
 
         setSkillName("");
-        setSkillLevel("");
+        setSkillSection("FrontEnd");
         setSkillImage(null);
         if (previewImage) {
           URL.revokeObjectURL(previewImage);
@@ -98,34 +89,6 @@ const Skills = () => {
       );
     } finally {
       setLoading(false);
-    }
-  };
-
-  const deleteSkills = async (skillId) => {
-    setDeletingId(skillId);
-    try {
-      const response = await axios.delete(
-        `${import.meta.env.VITE_SERVER_URI}/api/skill/delete-skill/${skillId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
-      if (response.data.success) {
-        toast.success(response.data.message || "Skill deleted successfully!");
-        fetchedSkills(false);
-        setDeleteConfirmId(null);
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error(
-        error?.response?.data?.message ||
-          "Something went wrong while deleting the skill.",
-      );
-    } finally {
-      setDeletingId(null);
     }
   };
 
@@ -213,24 +176,21 @@ const Skills = () => {
                 />
               </div>
 
-              {/* Proficiency Slider */}
+              {/* Skill Section Dropdown */}
               <div className="space-y-1.5">
-                <div className="flex justify-between items-center text-xs">
-                  <label className="font-medium text-slate-400">
-                    Proficiency Level
-                  </label>
-                  <span className="text-indigo-400 font-medium">
-                    {skillLevel !== "" ? `${skillLevel}%` : "0%"}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={skillLevel}
-                  onChange={(e) => setSkillLevel(e.target.value)}
-                  className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
-                />
+                <label className="block text-xs font-medium text-slate-400">
+                  Skill Section / Category
+                </label>
+                <select
+                  value={skillSection}
+                  onChange={(e) => setSkillSection(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer"
+                >
+                  <option value="FrontEnd">FrontEnd</option>
+                  <option value="BackEnd">BackEnd</option>
+                  <option value="Database">Database</option>
+                  <option value="Tools & others">Tools & others</option>
+                </select>
               </div>
 
               {/* Submit Button */}
@@ -273,83 +233,25 @@ const Skills = () => {
                       hidden: { opacity: 0, y: 10 },
                       visible: { opacity: 1, y: 0 },
                     }}
-                    className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 flex flex-col justify-between space-y-3 relative overflow-hidden group hover:border-slate-700 transition-colors"
+                    className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 flex items-center justify-between gap-3 group hover:border-slate-700 transition-colors"
                   >
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-slate-950 border border-slate-800 p-1.5 flex items-center justify-center overflow-hidden flex-shrink-0">
-                          <img
-                            src={skill.skillImage}
-                            alt={skill.skillName}
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-white text-sm">
-                            {skill.skillName}
-                          </h3>
-                          <span className="text-xs text-slate-400">
-                            {skill.skillLevel}% Proficiency
-                          </span>
-                        </div>
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <div className="w-10 h-10 rounded-lg bg-slate-950 border border-slate-800 p-1.5 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img
+                          src={skill.skillImage}
+                          alt={skill.skillName}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
-
-                      <button
-                        type="button"
-                        onClick={() => setDeleteConfirmId(skill._id)}
-                        disabled={deletingId === skill._id}
-                        aria-label={`Delete ${skill.skillName}`}
-                        className="text-slate-500 hover:text-red-400 p-1.5 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
-                      >
-                        <FiTrash2 className="w-4 h-4" />
-                      </button>
+                      <div className="min-w-0">
+                        <h3 className="font-medium text-white text-sm truncate">
+                          {skill.skillName}
+                        </h3>
+                        <span className="inline-block mt-0.5 text-[10px] uppercase tracking-wider font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded">
+                          {skill.skillSection}
+                        </span>
+                      </div>
                     </div>
-
-                    {/* Progress Bar */}
-                    <div className="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.skillLevel}%` }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        className="h-full bg-indigo-500 rounded-full"
-                      />
-                    </div>
-
-                    {/* Delete Modal */}
-                    <AnimatePresence>
-                      {deleteConfirmId === skill._id && (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          className="absolute inset-0 bg-slate-950/95 z-10 flex items-center justify-between px-4 py-2"
-                        >
-                          <div className="flex items-center gap-2 text-xs text-slate-300">
-                            <FiAlertCircle className="w-4 h-4 text-red-400" />
-                            <span>Delete "{skill.skillName}"?</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <button
-                              type="button"
-                              onClick={() => deleteSkills(skill._id)}
-                              disabled={deletingId === skill._id}
-                              className="bg-red-600 hover:bg-red-500 text-white text-xs font-medium px-2.5 py-1 rounded transition-colors cursor-pointer disabled:opacity-50"
-                            >
-                              {deletingId === skill._id
-                                ? "Deleting..."
-                                : "Delete"}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setDeleteConfirmId(null)}
-                              className="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-2.5 py-1 rounded transition-colors cursor-pointer"
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </motion.div>
                 ))}
               </motion.div>
