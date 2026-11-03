@@ -11,6 +11,7 @@ import Experience from "./pages/adminPages/Experience";
 import Skills from "./pages/adminPages/Skills";
 import Education from "./pages/adminPages/Education";
 import Achievements from "./pages/adminPages/Achievements";
+import Reviews from "./pages/adminPages/Reviews";
 
 // Client Component Imports
 import ClientBanner from "./pages/clientPages/ClientBanner";
@@ -84,6 +85,7 @@ const App = () => {
           <Route path="skills" element={<Skills />} />
           <Route path="education" element={<Education />} />
           <Route path="achievements" element={<Achievements />} />
+          <Route path="reviews" element={<Reviews />} />
         </Route>
 
         {/* Auth Routes */}

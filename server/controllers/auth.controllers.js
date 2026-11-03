@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import UserModel from "../models/user.Model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -5,7 +7,7 @@ import jwt from "jsonwebtoken";
 // http://localhost:3000/api/auth/register
 export const registerUser = async (req, res) => {
   try {
-    if (process.env.ALLOW_ADMIN_REGISTER !== "true") {
+    if (process.env.ALLOW_ADMIN_REGISTER !== true) {
       return res.status(403).json({
         success: false,
         message: "Admin registration is disabled",
@@ -19,14 +21,15 @@ export const registerUser = async (req, res) => {
         message: "Admin account already exists",
       });
     }
-    const { name, email, password } = req.body;
-    name = name.trim;
-    email = email.trim.toLowerCase();
+    let { name, email, password, role } = req.body;
+
     if (!name || !email || !password) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
+    name = name.trim();
+    email = email.trim().toLowerCase();
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
@@ -45,6 +48,7 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      role,
     });
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     const userData = user.toObject();
@@ -56,17 +60,43 @@ export const registerUser = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error(error, "Error in register user");
-    res
-      .status(500)
-      .json({ success: false, message: "Server error!", data: error });
+    console.error("REGISTER ERROR:", error);
+    console.error("ERROR MESSAGE:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
+// export const registerUser = async (req, res) => {
+//   try {
+//     console.log("Register API called!");
+
+//     console.log(
+//       "ALLOW_ADMIN_REGISTER:",
+//       JSON.stringify(process.env.ALLOW_ADMIN_REGISTER),
+//     );
+
+//     if (process.env.ALLOW_ADMIN_REGISTER !== "true") {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Admin registration is disabled",
+//       });
+//     }
+
+//     console.log("Registration is enabled!");
+
+//     // বাকি registration code
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 // http://localhost:3000/api/auth/login
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
     if (!email || !password) {
       return res
         .status(400)
@@ -86,7 +116,7 @@ export const loginUser = async (req, res) => {
         .json({ success: false, message: "Invalid credentials" });
     }
 
-    if (user !== "admin") return res.status(403).json("Access Denied");
+    if (user.role !== "admin") return res.status(403).json("Access Denied");
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
@@ -96,7 +126,12 @@ export const loginUser = async (req, res) => {
 
     return res
       .status(200)
-      .json({ success: true, message: "User logged in", data: user, token });
+      .json({
+        success: true,
+        message: "User logged in",
+        data: userData,
+        token,
+      });
   } catch (error) {
     console.error(error, "in login user");
     res
