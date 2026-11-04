@@ -18,6 +18,7 @@ import ClientBanner from "./pages/clientPages/ClientBanner";
 import ClientNavbar from "./components/clientComponents/ClientNavbar";
 import SkillsSection from "./pages/clientPages/SkillsSection";
 import ClientExperience from "./pages/clientPages/Experience";
+import ClientProjects from "./pages/clientPages/ClientProjects";
 import Topics from "./pages/adminPages/Topics";
 import Cert from "./pages/adminPages/Cert";
 
@@ -48,7 +49,7 @@ const ClientLayout = () => {
         </section> */}
 
         <section id="projects" className="scroll-mt-24 p-8 min-h-[50vh]">
-          <h2 className="text-2xl font-bold">Projects</h2>
+          <ClientProjects limit={3} />
         </section>
 
         <section id="experience" className="scroll-mt-24 p-8 min-h-[50vh]">
@@ -77,6 +78,7 @@ const App = () => {
       <Routes>
         {/* Public Portfolio Page */}
         <Route path="/" element={<ClientLayout />} />
+        <Route path="/projects" element={<ClientProjects />} />
 
         {/* Admin Dashboard Routes */}
         <Route path="/admin" element={<Home />}>

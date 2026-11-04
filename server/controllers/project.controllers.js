@@ -104,3 +104,28 @@ export const getAdminProject = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
+export const getPublicProjects = async (_req, res) => {
+  try {
+    const portfolioOwner = await UserModel.findOne({ role: "admin" }).select(
+      "_id",
+    );
+    if (!portfolioOwner) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Portfolio owner not found." });
+    }
+
+    const projects = await projectModel
+      .find({ userId: portfolioOwner._id })
+      .select("title description projectImage gitHub live createdAt")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({ success: true, projects });
+  } catch (error) {
+    console.error("Error fetching public projects:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Unable to load projects." });
+  }
+};

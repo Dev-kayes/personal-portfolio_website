@@ -5,6 +5,7 @@ import {
   addProject,
   deleteProject,
   getAdminProject,
+  getPublicProjects,
 } from "../controllers/project.controllers.js";
 const projectRoute = express.Router();
 
@@ -21,5 +22,6 @@ projectRoute.delete("/delete-projects/:projectId", isAuth, deleteProject);
 // http://localhost:3000/api/projects/get-admin-projects
 // https://kayesbackend.vercel.app/api/projects/get-admin-projects
 projectRoute.get("/get-admin-projects", isAuth, getAdminProject);
+projectRoute.get("/public", getPublicProjects);
 
 export default projectRoute;
