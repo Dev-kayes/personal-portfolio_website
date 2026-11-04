@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import useFetchedSkills from "../../../hooks/useFetchedSkills";
@@ -214,47 +214,49 @@ const Skills = () => {
           {/* Skills Grid */}
           <div className="lg:col-span-8">
             {skills && skills.length > 0 ? (
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: {
-                    opacity: 1,
-                    transition: { staggerChildren: 0.05 },
-                  },
-                }}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-3"
-              >
-                {skills.map((skill) => (
-                  <motion.div
-                    key={skill._id}
-                    variants={{
-                      hidden: { opacity: 0, y: 10 },
-                      visible: { opacity: 1, y: 0 },
-                    }}
-                    className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 flex items-center justify-between gap-3 group hover:border-slate-700 transition-colors"
-                  >
-                    <div className="flex items-center gap-3 overflow-hidden">
-                      <div className="w-10 h-10 rounded-lg bg-slate-950 border border-slate-800 p-1.5 flex items-center justify-center overflow-hidden flex-shrink-0">
-                        <img
-                          src={skill.skillImage}
-                          alt={skill.skillName}
-                          className="w-full h-full object-contain"
-                        />
+              <div className="max-h-[60vh] overflow-y-auto overscroll-contain pr-2 lg:max-h-[calc(100svh-15rem)]">
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                      opacity: 1,
+                      transition: { staggerChildren: 0.05 },
+                    },
+                  }}
+                  className="grid grid-cols-1 gap-3 sm:grid-cols-2"
+                >
+                  {skills.map((skill) => (
+                    <motion.div
+                      key={skill._id}
+                      variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      className="group flex items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-900/80 p-4 transition-colors hover:border-slate-700"
+                    >
+                      <div className="flex items-center gap-3 overflow-hidden">
+                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-800 bg-slate-950 p-1.5">
+                          <img
+                            src={skill.skillImage}
+                            alt={skill.skillName}
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="truncate text-sm font-medium text-white">
+                            {skill.skillName}
+                          </h3>
+                          <span className="mt-0.5 inline-block rounded border border-indigo-500/20 bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-indigo-400">
+                            {skill.skillSection}
+                          </span>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <h3 className="font-medium text-white text-sm truncate">
-                          {skill.skillName}
-                        </h3>
-                        <span className="inline-block mt-0.5 text-[10px] uppercase tracking-wider font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded">
-                          {skill.skillSection}
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             ) : (
               <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-12 text-center space-y-2">
                 <FiCpu className="w-8 h-8 text-slate-600 mx-auto" />
