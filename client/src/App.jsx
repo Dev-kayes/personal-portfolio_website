@@ -25,6 +25,9 @@ import CertAndCourses from "./pages/clientPages/CertAndCourses";
 import ClientServices from "./pages/clientPages/ClientServices";
 import ClientFAQs from "./pages/clientPages/ClientFAQs";
 import ClientTopicCovered from "./pages/clientPages/ClientTopicCovered";
+import ClientTestimonials from "./pages/clientPages/ClientTestimonials";
+import ClientFooter from "./components/clientComponents/ClientFooter";
+import ClientContact from "./pages/clientPages/ClientContact";
 
 // Function for Background Image rotation:
 function GalaxyBackground() {
@@ -75,11 +78,15 @@ const ClientLayout = () => {
         <section id="faqs" className="scroll-mt-30">
           <ClientFAQs />
         </section>
+        <section id="testimonials" className="scroll-mt-30">
+          <ClientTestimonials />
+        </section>
 
-        <section id="contact" className="scroll-mt-24 p-8 min-h-[50vh]">
-          <h2 className="text-2xl font-bold">Contact</h2>
+        <section id="contact" className="scroll-mt-24">
+          <ClientContact />
         </section>
       </main>
+      <ClientFooter />
     </div>
   );
 };

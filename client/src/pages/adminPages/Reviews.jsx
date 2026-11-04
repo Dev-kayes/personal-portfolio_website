@@ -124,7 +124,7 @@ const Reviews = () => {
         >
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-white">
-              Reviews Management
+              Testimonials Management
             </h1>
             <p className="mt-1 text-sm text-slate-400">
               Add and manage testimonials for your portfolio.
@@ -145,7 +145,7 @@ const Reviews = () => {
           >
             <h2 className="flex items-center gap-2 border-b border-slate-800/80 pb-3 text-base font-semibold text-white">
               <LuPlus className="text-sm text-indigo-400" />
-              Add New Review
+              Add New Testimonial
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -173,7 +173,7 @@ const Reviews = () => {
                   htmlFor="review-content"
                   className="block text-xs font-medium text-slate-400"
                 >
-                  Review
+                  Testimonial
                 </label>
                 <textarea
                   id="review-content"
@@ -212,21 +212,21 @@ const Reviews = () => {
                 className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow transition-colors hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <LuPlus />
-                {loading ? "Adding review..." : "Add Review"}
+                {loading ? "Adding testimonial..." : "Add Testimonial"}
               </button>
             </form>
           </motion.section>
 
           <section className="space-y-4 lg:col-span-7">
             <h2 className="text-base font-semibold text-white">
-              Reviews ({reviews.length})
+              Testimonials ({reviews.length})
             </h2>
 
             {reviews.length === 0 ? (
               <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-900/40 p-12 text-center">
                 <LuMessageSquareQuote className="mx-auto h-8 w-8 text-slate-600" />
                 <p className="text-sm font-medium text-slate-300">
-                  No reviews added yet
+                  No testimonials added yet
                 </p>
                 <p className="text-xs text-slate-500">
                   Add a testimonial using the form.

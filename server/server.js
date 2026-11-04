@@ -11,6 +11,7 @@ import experienceRoute from "./routes/experience.routes.js";
 import certRoute from "./routes/cert.routes.js";
 import reviewRoute from "./routes/review.routes.js";
 import topicRoute from "./routes/topic.routes.js";
+import contactRoute from "./routes/contact.routes.js";
 // import serviceRoute from "./routes/services.routes.js";
 
 const app = express();
@@ -71,6 +72,9 @@ app.use("/api/topic", topicRoute);
 // http://localhost:3000/api/rev
 // https://kayesbackend.vercel.app/api/rev
 app.use("/api/rev", reviewRoute);
+
+// Contact form:
+app.use("/api/contact", contactRoute);
 
 // Service:
 // http://localhost:3000/api/service

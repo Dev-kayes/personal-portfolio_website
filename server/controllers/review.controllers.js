@@ -3,18 +3,25 @@ import ReviewModel from "../models/review.Model.js";
 
 export const addReview = async (req, res) => {
   try {
-    const name = req.body?.name?.trim();
-    const content = req.body?.content?.trim();
-    const image = req.body?.image?.trim();
+    const name = typeof req.body?.name === "string" ? req.body.name.trim() : "";
+    const content =
+      typeof req.body?.content === "string" ? req.body.content.trim() : "";
+    const image =
+      typeof req.body?.image === "string" ? req.body.image.trim() : "";
 
-    if (!name || !content) {
+    if (!name || !content || name.length > 100 || content.length > 2000) {
       return res.status(400).json({
         success: false,
-        message: "Name and content are required",
+        message:
+          "Name and testimonial are required; name must be 100 characters or fewer and testimonial 2,000 characters or fewer.",
       });
     }
 
-    const review = await ReviewModel.create({ name, content, image });
+    const review = await ReviewModel.create({
+      name,
+      content,
+      ...(image ? { image } : {}),
+    });
     return res
       .status(201)
       .json({ success: true, message: "Review added successfully", review });

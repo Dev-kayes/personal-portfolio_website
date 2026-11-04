@@ -13,7 +13,7 @@ const reviewRoute = express.Router();
 // Add-Review:
 // http://localhost:3000/api/rev/add-rev
 // https://kayesbackend.vercel.app/api/rev/add-rev
-reviewRoute.post("/add-rev", upload.single("rev-Image"), addReview);
+reviewRoute.post("/add-rev", isAuth, upload.single("rev-Image"), addReview);
 
 // Get-All-Review:
 // http://localhost:3000/api/rev/get-all-rev
@@ -25,7 +25,6 @@ reviewRoute.get("/get-all-rev", getAllReview);
 // https://kayesbackend.vercel.app/api/rev/del-rev/:revId
 reviewRoute.delete(
   "/del-rev/:revId",
-  upload.single("rev-Image"),
   isAuth,
   deleteReview,
 );
