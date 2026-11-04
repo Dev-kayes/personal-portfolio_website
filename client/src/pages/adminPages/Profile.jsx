@@ -127,7 +127,7 @@ const Profile = () => {
   };
 
   return (
-    <section className="max-w-5xl mx-auto space-y-8 pb-12 animate-fade-in">
+    <section className="max-w-5xl mx-auto space-y-8 animate-fade-in">
       {/* Header Section */}
       <div className="border-b border-zinc-800 pb-5">
         <h1 className="text-2xl sm:text-3xl font-bold text-zinc-100 tracking-tight">

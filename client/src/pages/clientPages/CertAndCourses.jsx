@@ -57,8 +57,7 @@ const CertAndCourses = () => {
           Certifications &amp; Courses
         </h2>
         <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-400 sm:text-base">
-          Courses and certifications I&apos;ve completed or am currently
-          pursuing.
+          A collection of my technical training, courses, and certifications.
         </p>
       </header>
 
@@ -121,7 +120,9 @@ const CertAndCourses = () => {
                         : "border-emerald-800 bg-emerald-950/70 text-emerald-300"
                     }`}
                   >
-                    {certificate.isCurrentlyStudying ? "In Progress" : "Completed"}
+                    {certificate.isCurrentlyStudying
+                      ? "In Progress"
+                      : "Completed"}
                   </span>
                 </div>
 

@@ -54,6 +54,25 @@ body {
   }
 }
 
+@keyframes skill-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.skill-marquee {
+  overflow: hidden;
+}
+
+.skill-marquee-track {
+  animation: skill-marquee 32s linear infinite;
+}
+
+.skill-marquee:hover .skill-marquee-track,
+.skill-marquee:focus-within .skill-marquee-track {
+  animation-play-state: paused;
+}
+
 /* Keep background behind the website content */
 .galaxy-background ~ * {
   position: relative;
@@ -64,5 +83,22 @@ body {
   .galaxy-background img {
     animation: none;
     will-change: auto;
+  }
+
+  .skill-marquee-track {
+    width: 100%;
+    animation: none;
+  }
+
+  .skill-marquee-group:first-child {
+    width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .skill-marquee-group[aria-hidden="true"] {
+    display: none;
   }
 }
