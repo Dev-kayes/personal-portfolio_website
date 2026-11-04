@@ -136,22 +136,14 @@ const ClientBanner = () => {
                 <div
                   key={group}
                   aria-hidden={group === 1}
-                  className="skill-marquee-group flex min-w-[100vw] shrink-0 items-center justify-around gap-4 px-4 sm:gap-6 sm:px-6"
+                  className="skill-marquee-group flex shrink-0 items-center gap-8 pr-8 sm:gap-12 sm:pr-12"
                 >
                   {skills.map((skill) => (
                     <div
                       key={`${group}-${skill._id}`}
-                      className="flex shrink-0 items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/80 px-3 py-2 sm:px-4"
+                      className="shrink-0"
                     >
-                      {skill.skillImage && (
-                        <img
-                          src={skill.skillImage}
-                          alt=""
-                          loading="lazy"
-                          className="h-6 w-6 object-contain sm:h-7 sm:w-7"
-                        />
-                      )}
-                      <span className="whitespace-nowrap text-xs font-medium text-slate-200 sm:text-sm">
+                      <span className="whitespace-nowrap text-lg font-semibold text-white sm:text-xl">
                         {skill.skillName}
                       </span>
                     </div>

@@ -17,11 +17,14 @@ import Reviews from "./pages/adminPages/Reviews";
 import ClientBanner from "./pages/clientPages/ClientBanner";
 import ClientNavbar from "./components/clientComponents/ClientNavbar";
 import SkillsSection from "./pages/clientPages/SkillsSection";
-import ClientExperience from "./pages/clientPages/Experience";
+// import ClientExperience from "./pages/clientPages/Experience";
 import ClientProjects from "./pages/clientPages/ClientProjects";
 import Topics from "./pages/adminPages/Topics";
 import Cert from "./pages/adminPages/Cert";
 import CertAndCourses from "./pages/clientPages/CertAndCourses";
+import ClientServices from "./pages/clientPages/ClientServices";
+import ClientFAQs from "./pages/clientPages/ClientFAQs";
+import ClientTopicCovered from "./pages/clientPages/ClientTopicCovered";
 
 // Function for Background Image rotation:
 function GalaxyBackground() {
@@ -53,15 +56,24 @@ const ClientLayout = () => {
           <ClientProjects limit={3} />
         </section>
 
-        <section id="experience" className="scroll-mt-24 p-8 min-h-[50vh]">
+        {/* <section id="experience" className="scroll-mt-24 p-8 min-h-[50vh]">
           <ClientExperience />
-        </section>
+        </section> */}
 
-        <section id="certifications" className="scroll-mt-24">
+        <section id="certifications" className="scroll-mt-30">
           <CertAndCourses />
         </section>
-        <section id="skills" className="scroll-mt-24">
+        <section id="skills" className="scroll-mt-30">
           <SkillsSection />
+        </section>
+        <section id="currently-learning" className="scroll-mt-30">
+          <ClientTopicCovered />
+        </section>
+        <section id="services" className="scroll-mt-30">
+          <ClientServices />
+        </section>
+        <section id="faqs" className="scroll-mt-30">
+          <ClientFAQs />
         </section>
 
         <section id="contact" className="scroll-mt-24 p-8 min-h-[50vh]">
