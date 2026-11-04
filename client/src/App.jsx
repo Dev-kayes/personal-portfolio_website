@@ -17,6 +17,7 @@ import Reviews from "./pages/adminPages/Reviews";
 import ClientBanner from "./pages/clientPages/ClientBanner";
 import ClientNavbar from "./components/clientComponents/ClientNavbar";
 import SkillsSection from "./pages/clientPages/SkillsSection";
+import ClientExperience from "./pages/clientPages/Experience";
 import Topics from "./pages/adminPages/Topics";
 import Cert from "./pages/adminPages/Cert";
 
@@ -42,16 +43,16 @@ const ClientLayout = () => {
           <ClientBanner />
         </section>
 
-        <section id="about" className="scroll-mt-24 p-8 min-h-[50vh]">
+        {/* <section id="about" className="scroll-mt-24 p-8 min-h-[50vh]">
           <h2 className="text-2xl font-bold">About Me</h2>
-        </section>
+        </section> */}
 
         <section id="projects" className="scroll-mt-24 p-8 min-h-[50vh]">
           <h2 className="text-2xl font-bold">Projects</h2>
         </section>
 
         <section id="experience" className="scroll-mt-24 p-8 min-h-[50vh]">
-          <h2 className="text-2xl font-bold">Experience</h2>
+          <ClientExperience />
         </section>
 
         <section id="skills" className="scroll-mt-24">

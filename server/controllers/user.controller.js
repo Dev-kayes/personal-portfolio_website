@@ -21,6 +21,27 @@ export const getCurrentUser = async (req, res) => {
   }
 };
 
+export const getPublicProfile = async (_req, res) => {
+  try {
+    const profile = await UserModel.findOne({ role: "admin" }).select(
+      "name title intro profilePic github linkedIn twitter facebook isAvailable",
+    );
+
+    if (!profile) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Portfolio profile not found." });
+    }
+
+    return res.status(200).json({ success: true, profile });
+  } catch (error) {
+    console.error("Error fetching public profile:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Unable to load public profile." });
+  }
+};
+
 // http://localhost:3000/api/user/update-profile
 // https://kayesbackend.vercel.app/api/user/update-profile
 export const updateProfile = async (req, res) => {

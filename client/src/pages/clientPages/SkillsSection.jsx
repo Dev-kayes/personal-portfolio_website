@@ -12,40 +12,55 @@ const skillSections = [
 const SkillsSection = () => {
   const [skills, setSkills] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchSkills = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_SERVER_URI}/api/skill/public`,
+          { signal: controller.signal },
         );
-        if (response.data?.success) {
-          setSkills(response.data.skills);
-        } else {
-          setError("Unable to load skills right now.");
+
+        if (!response.data?.success || !Array.isArray(response.data.skills)) {
+          throw new Error("The skills response was invalid.");
         }
+
+        setSkills(response.data.skills);
       } catch (fetchError) {
+        if (controller.signal.aborted) return;
         console.error("Failed to fetch public skills:", fetchError);
         setError("Unable to load skills right now.");
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
 
     fetchSkills();
+
+    return () => controller.abort();
   }, []);
 
   return (
     <div className="px-8 py-16 min-h-[50vh]">
       <div className="max-w-6xl mx-auto space-y-10">
         <div className="text-center space-y-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-400">
-            What I work with
-          </p>
           <h2 className="text-3xl sm:text-4xl font-bold text-white">
             Skills &amp; Technologies
           </h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-400">
+            A combination of Modern technologies and tools that I use to build
+            fast , secure and scalable web applications
+          </p>
         </div>
 
-        {error ? (
+        {loading ? (
+          <p role="status" className="text-center text-slate-400">
+            Loading skills...
+          </p>
+        ) : error ? (
           <p role="status" className="text-center text-slate-400">
             {error}
           </p>
@@ -72,7 +87,10 @@ const SkillsSection = () => {
                     id={`skill-section-${value}`}
                     className="mb-5 flex items-center gap-2 text-xl font-semibold text-white"
                   >
-                    <Code2 aria-hidden="true" className="h-5 w-5 text-indigo-400" />
+                    <Code2
+                      aria-hidden="true"
+                      className="h-5 w-5 text-indigo-400"
+                    />
                     {label}
                   </h3>
                   <div className="flex flex-wrap gap-3">

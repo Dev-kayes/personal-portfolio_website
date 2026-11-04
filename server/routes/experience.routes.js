@@ -4,6 +4,7 @@ import {
   addExperience,
   deleteExperience,
   getAdminExperience,
+  getPublicExperience,
 } from "../controllers/experience.controller.js";
 const experienceRoute = express.Router();
 
@@ -16,6 +17,7 @@ experienceRoute.post("/add-exp", isAuth, addExperience);
 // http://localhost:3000/api/experience/get-admin-exp
 // https://kayesbackend.vercel.app/api/experience/get-admin-exp
 experienceRoute.get("/get-admin-exp", isAuth, getAdminExperience);
+experienceRoute.get("/public", getPublicExperience);
 
 // Delete experience:
 // http://localhost:3000/api/experience/del-exp/:expId

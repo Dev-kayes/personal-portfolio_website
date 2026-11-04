@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ChevronDown,
   Menu,
@@ -6,7 +6,6 @@ import {
   FileText,
   LogIn,
   Home,
-  User,
   Briefcase,
   Mail,
   Award,
@@ -18,7 +17,7 @@ import {
 } from "lucide-react";
 
 // Configuration constants - adjust paths as needed for your project structure
-const RESUME_URL = "/resume.pdf"; // Place your resume PDF in the /public folder
+const RESUME_URL = "https://myprofessionalresume.netlify.app/"; // Place your resume PDF in the /public folder
 const LOGIN_ROUTE = "/admin/login"; // Your admin login route
 
 const ClientNavbar = () => {
@@ -34,7 +33,6 @@ const ClientNavbar = () => {
   // Main Nav Links
   const mainNavItems = [
     { name: "Home", href: "#home", id: "home", icon: Home },
-    { name: "About", href: "#about", id: "about", icon: User },
     { name: "Projects", href: "#projects", id: "projects", icon: Briefcase },
     { name: "Contact", href: "#contact", id: "contact", icon: Mail },
   ];
@@ -194,21 +192,14 @@ const ClientNavbar = () => {
               onClick={() => handleNavClick(mainNavItems[0].id)}
             />
 
-            {/* 2. About */}
+            {/* 2. Projects */}
             <NavLink
               item={mainNavItems[1]}
               isActive={activeSection === mainNavItems[1].id}
               onClick={() => handleNavClick(mainNavItems[1].id)}
             />
 
-            {/* 3. Projects */}
-            <NavLink
-              item={mainNavItems[2]}
-              isActive={activeSection === mainNavItems[2].id}
-              onClick={() => handleNavClick(mainNavItems[2].id)}
-            />
-
-            {/* 4. More Dropdown */}
+            {/* 3. More Dropdown */}
             <div
               className="relative"
               ref={dropdownRef}
@@ -287,11 +278,11 @@ const ClientNavbar = () => {
               </div>
             </div>
 
-            {/* 5. Contact */}
+            {/* 4. Contact */}
             <NavLink
-              item={mainNavItems[3]}
-              isActive={activeSection === mainNavItems[3].id}
-              onClick={() => handleNavClick(mainNavItems[3].id)}
+              item={mainNavItems[2]}
+              isActive={activeSection === mainNavItems[2].id}
+              onClick={() => handleNavClick(mainNavItems[2].id)}
             />
           </nav>
 
@@ -347,7 +338,7 @@ const ClientNavbar = () => {
       >
         <div className="px-4 pt-3 pb-6 space-y-2 bg-slate-950/95 backdrop-blur-xl">
           {/* Main items */}
-          {mainNavItems.slice(0, 3).map((item) => (
+          {mainNavItems.slice(0, 2).map((item) => (
             <MobileNavLink
               key={item.id}
               item={item}
@@ -398,9 +389,9 @@ const ClientNavbar = () => {
 
           {/* Contact Link */}
           <MobileNavLink
-            item={mainNavItems[3]}
-            isActive={activeSection === mainNavItems[3].id}
-            onClick={() => handleNavClick(mainNavItems[3].id)}
+            item={mainNavItems[2]}
+            isActive={activeSection === mainNavItems[2].id}
+            onClick={() => handleNavClick(mainNavItems[2].id)}
           />
 
           {/* Mobile Buttons */}

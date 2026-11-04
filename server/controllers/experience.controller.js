@@ -80,6 +80,31 @@ export const getAdminExperience = async (req, res) => {
   }
 };
 
+export const getPublicExperience = async (_req, res) => {
+  try {
+    const portfolioOwner = await UserModel.findOne({ role: "admin" }).select(
+      "_id",
+    );
+    if (!portfolioOwner) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Portfolio owner not found." });
+    }
+
+    const experiences = await experienceModel
+      .find({ userId: portfolioOwner._id })
+      .select("company position description startDate endDate")
+      .sort({ startDate: -1 });
+
+    return res.status(200).json({ success: true, experiences });
+  } catch (error) {
+    console.error("Error fetching public experiences:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error." });
+  }
+};
+
 // Delete experience:
 // http://localhost:3000/api/experience/del-exp/:expId
 // https://kayesbackend.vercel.app/api/experience/del-exp/:expId
