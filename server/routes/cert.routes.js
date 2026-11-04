@@ -1,23 +1,40 @@
 import express from "express";
 import {
   addCert,
-  // deleteEduction,
   getAdminCert,
 } from "../controllers/certificate.controllers.js";
 import { isAuth } from "../middleWare/isAuth.js";
+import upload from "../middleWare/multer.js";
+import multer from "multer";
 const certRoute = express.Router();
 
-// Add Education
-// http://localhost:3000/api/education/add-cert
-// https://kayesbackend.vercel.app/api/education/add-cert
-certRoute.post("/add-cert", isAuth, addCert);
-// Delete Education
-// http://localhost:3000/api/education/delete-edu/:eduId
-// https://kayesbackend.vercel.app/api/education/delete-edu/:eduId
-// authRouter.delete("/delete-edu/:eduId", isAuth, deleteEduction);
-// Get Admin Education
-// http://localhost:3000/api/education/get-admin-cert
-// https://kayesbackend.vercel.app/api/education/get-admin-cert
+const uploadCertificateImage = (req, res, next) => {
+  upload.single("image")(req, res, (error) => {
+    if (!error) {
+      next();
+      return;
+    }
+
+    if (error instanceof multer.MulterError && error.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).json({
+        success: false,
+        message: "Certificate image must be 5 MB or smaller.",
+      });
+    }
+
+    if (error instanceof multer.MulterError) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+
+    console.error(error, "Error processing certificate image");
+    return res.status(400).json({
+      success: false,
+      message: "Certificate image could not be uploaded.",
+    });
+  });
+};
+
+certRoute.post("/add-cert", isAuth, uploadCertificateImage, addCert);
 certRoute.get("/get-admin-cert", isAuth, getAdminCert);
 
 export default certRoute;

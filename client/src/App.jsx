@@ -9,7 +9,7 @@ import Profile from "./pages/adminPages/Profile";
 import Projects from "./pages/adminPages/Projects";
 import Experience from "./pages/adminPages/Experience";
 import Skills from "./pages/adminPages/Skills";
-import Education from "./pages/adminPages/Education";
+// import Education from "./pages/adminPages/Education";
 import Achievements from "./pages/adminPages/Achievements";
 import Reviews from "./pages/adminPages/Reviews";
 
@@ -17,6 +17,9 @@ import Reviews from "./pages/adminPages/Reviews";
 import ClientBanner from "./pages/clientPages/ClientBanner";
 import ClientNavbar from "./components/clientComponents/ClientNavbar";
 import SkillsSection from "./pages/clientPages/SkillsSection";
+import Topics from "./pages/adminPages/Topics";
+import CurrentLearnings from "./pages/adminPages/CurrentLearnings";
+import Cert from "./pages/adminPages/Cert";
 
 // Function for Background Image rotation:
 function GalaxyBackground() {
@@ -83,8 +86,11 @@ const App = () => {
           <Route path="projects" element={<Projects />} />
           <Route path="experience" element={<Experience />} />
           <Route path="skills" element={<Skills />} />
-          <Route path="education" element={<Education />} />
+          {/* <Route path="education" element={<Education />} /> */}
+          <Route path="cert" element={<Cert />} />
           <Route path="achievements" element={<Achievements />} />
+          <Route path="topics" element={<Topics />} />
+          <Route path="currently-learning" element={<CurrentLearnings />} />
           <Route path="reviews" element={<Reviews />} />
         </Route>
 

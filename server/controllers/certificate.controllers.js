@@ -1,9 +1,7 @@
 import certModel from "../models/cert.Model.js";
 import UserModel from "../models/user.Model.js";
+import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
 
-// Add Education
-// http://localhost:3000/api/education/add-edu
-// https://kayesbackend.vercel.app/api/education/add-edu
 export const addCert = async (req, res) => {
   try {
     const userId = req.userId;
@@ -15,7 +13,6 @@ export const addCert = async (req, res) => {
     }
     const {
       institution,
-      image,
       title,
       topicsCovered,
       startDate,
@@ -23,26 +20,44 @@ export const addCert = async (req, res) => {
       isCurrentlyStudying,
       link,
     } = req.body;
-    if (
-      !institution ||
-      !image ||
-      !title ||
-      !topicsCovered ||
-      !link ||
-      !startDate
-    ) {
-      return res.status(400).json("All field is required!");
+    const topics = Array.isArray(topicsCovered)
+      ? topicsCovered
+      : typeof topicsCovered === "string"
+        ? topicsCovered.split(",")
+        : [];
+    const normalizedTopics = topics.map((topic) => topic.trim()).filter(Boolean);
+
+    if (!institution || !title || !normalizedTopics.length || !link || !startDate) {
+      return res
+        .status(400)
+        .json({ success: false, message: "All required fields must be provided." });
     }
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please upload a certificate image." });
+    }
+
+    let image;
+    try {
+      image = await uploadOnCloudinary(req.file.buffer, "portfolio_certificates");
+    } catch (error) {
+      console.error(error, "Error uploading certificate image");
+      return res
+        .status(500)
+        .json({ success: false, message: "Error uploading certificate image." });
+    }
+
     const cert = await certModel.create({
       userId,
-      institution,
+      institution: institution.trim(),
       image,
-      title,
-      topicsCovered,
+      title: title.trim(),
+      topicsCovered: normalizedTopics,
       startDate,
-      endDate,
-      isCurrentlyStudying,
-      link,
+      endDate: endDate || null,
+      isCurrentlyStudying: isCurrentlyStudying === "true",
+      link: link.trim(),
     });
     return res.status(201).json({
       success: true,
@@ -51,42 +66,18 @@ export const addCert = async (req, res) => {
     });
   } catch (error) {
     console.error(error, "Error in Add Certificate");
-    return res.status(500).json("Internal Server Error!");
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error while saving certificate." });
   }
 };
 
-// Delete Education
-// http://localhost:3000/api/education/delete-edu/:eduId
-// https://kayesbackend.vercel.app/api/education/delete-edu/:eduId
-// export const deleteEduction = async (req, res) => {
-//   try {
-//     const userId = req.userId;
-//     const educationId = req.params.eduId;
-//     console.log(educationId);
-//     const user = await UserModel.findById(userId);
-//     if (!user) {
-//       return res
-//         .status(404)
-//         .json({ success: false, message: "User not found" });
-//     }
-//     const education = await eduModel.findOneAndDelete({
-//       _id: educationId,
-//       userId,
-//     });
-//     return res.status(201).json({
-//       success: true,
-//       message: "Education is Deleted successfully",
-//       education,
-//     });
-//   } catch (error) {
-//     console.error(error, "Error in Delete Education");
-//     return res.status(500).json("Internal Server Error!");
-//   }
-// };
-
-// Get Admin Education
-// http://localhost:3000/api/education/get-admin-edu
-// https://kayesbackend.vercel.app/api/education/get-admin-edu
 export const getAdminCert = async (req, res) => {
   try {
     const userId = req.userId;

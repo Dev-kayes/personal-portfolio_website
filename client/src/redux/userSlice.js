@@ -8,6 +8,7 @@ const userSlice = createSlice({
     skills: [],
     projects: [],
     education: [],
+    certs: [],
   },
   reducers: {
     setUserData: (state, action) => {
@@ -29,6 +30,9 @@ const userSlice = createSlice({
     setEducation: (state, action) => {
       state.education = action.payload;
     },
+    setCerts: (state, action) => {
+      state.certs = action.payload;
+    },
   },
 });
 
@@ -40,4 +44,5 @@ export const {
   setSkills,
   setProjects,
   setEducation,
+  setCerts,
 } = userSlice.actions;
