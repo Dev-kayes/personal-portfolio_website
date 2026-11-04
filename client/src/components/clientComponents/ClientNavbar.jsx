@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import {
   ChevronDown,
   Menu,
@@ -26,9 +27,39 @@ const ClientNavbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [hasExperience, setHasExperience] = useState(false);
 
   const dropdownRef = useRef(null);
   const dropdownTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchExperienceAvailability = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_SERVER_URI}/api/experience/public`,
+          { signal: controller.signal },
+        );
+
+        if (
+          !response.data?.success ||
+          !Array.isArray(response.data.experiences)
+        ) {
+          throw new Error("The experience response was invalid.");
+        }
+
+        setHasExperience(response.data.experiences.length > 0);
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        console.error("Failed to check public experiences:", error);
+        setHasExperience(false);
+      }
+    };
+
+    fetchExperienceAvailability();
+    return () => controller.abort();
+  }, []);
 
   // Main Nav Links
   const mainNavItems = [
@@ -72,6 +103,9 @@ const ClientNavbar = () => {
     ...mainNavItems.map((item) => item.id),
     ...moreNavItems.map((item) => item.id),
   ];
+  const visibleMoreNavItems = moreNavItems.filter(
+    (item) => item.id !== "experience" || hasExperience,
+  );
 
   // Detect active section on scroll using Intersection Observer
   useEffect(() => {
@@ -157,7 +191,9 @@ const ClientNavbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const isMoreActive = moreNavItems.some((item) => item.id === activeSection);
+  const isMoreActive = visibleMoreNavItems.some(
+    (item) => item.id === activeSection,
+  );
 
   return (
     <header
@@ -244,7 +280,7 @@ const ClientNavbar = () => {
                     : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
                 }`}
               >
-                {moreNavItems.map((subItem) => {
+                {visibleMoreNavItems.map((subItem) => {
                   const Icon = subItem.icon;
                   const isSubActive = activeSection === subItem.id;
 
@@ -376,7 +412,7 @@ const ClientNavbar = () => {
                 isMobileMoreOpen ? "block" : "hidden"
               }`}
             >
-              {moreNavItems.map((subItem) => (
+              {visibleMoreNavItems.map((subItem) => (
                 <MobileNavLink
                   key={subItem.id}
                   item={subItem}

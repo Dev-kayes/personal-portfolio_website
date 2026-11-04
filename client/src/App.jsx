@@ -21,6 +21,7 @@ import ClientExperience from "./pages/clientPages/Experience";
 import ClientProjects from "./pages/clientPages/ClientProjects";
 import Topics from "./pages/adminPages/Topics";
 import Cert from "./pages/adminPages/Cert";
+import CertAndCourses from "./pages/clientPages/CertAndCourses";
 
 // Function for Background Image rotation:
 function GalaxyBackground() {
@@ -56,6 +57,9 @@ const ClientLayout = () => {
           <ClientExperience />
         </section>
 
+        <section id="certifications" className="scroll-mt-24">
+          <CertAndCourses />
+        </section>
         <section id="skills" className="scroll-mt-24">
           <SkillsSection />
         </section>

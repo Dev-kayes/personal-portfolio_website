@@ -44,7 +44,7 @@ const Experience = () => {
       ) : error ? (
         <p role="status">{error}</p>
       ) : experiences.length === 0 ? (
-        <p>No experience added yet.</p>
+        ""
       ) : (
         experiences.map((experience) => (
           <article key={experience._id}>

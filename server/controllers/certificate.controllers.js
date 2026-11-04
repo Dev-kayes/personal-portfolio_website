@@ -101,3 +101,30 @@ export const getAdminCert = async (req, res) => {
     return res.status(500).json("Internal Server Error!");
   }
 };
+
+export const getPublicCert = async (_req, res) => {
+  try {
+    const portfolioOwner = await UserModel.findOne({ role: "admin" }).select(
+      "_id",
+    );
+    if (!portfolioOwner) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Portfolio owner not found." });
+    }
+
+    const certificates = await certModel
+      .find({ userId: portfolioOwner._id })
+      .select(
+        "institution image title topicsCovered startDate endDate isCurrentlyStudying link",
+      )
+      .sort({ startDate: -1 });
+
+    return res.status(200).json({ success: true, certificates });
+  } catch (error) {
+    console.error("Error fetching public certificates:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Unable to load certificates." });
+  }
+};

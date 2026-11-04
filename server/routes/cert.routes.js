@@ -2,6 +2,7 @@ import express from "express";
 import {
   addCert,
   getAdminCert,
+  getPublicCert,
 } from "../controllers/certificate.controllers.js";
 import { isAuth } from "../middleWare/isAuth.js";
 import upload from "../middleWare/multer.js";
@@ -36,5 +37,6 @@ const uploadCertificateImage = (req, res, next) => {
 
 certRoute.post("/add-cert", isAuth, uploadCertificateImage, addCert);
 certRoute.get("/get-admin-cert", isAuth, getAdminCert);
+certRoute.get("/public", getPublicCert);
 
 export default certRoute;
