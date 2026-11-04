@@ -70,11 +70,11 @@ const navGroups = [
         path: "/admin/topics",
         icon: LuBookOpen,
       },
-      {
-        name: "currently learning",
-        path: "/admin/currently-learning",
-        icon: LuBrain,
-      },
+      // {
+      //   name: "currently learning",
+      //   path: "/admin/currently-learning",
+      //   icon: LuBrain,
+      // },
       {
         name: "Reviews",
         path: "/admin/reviews",

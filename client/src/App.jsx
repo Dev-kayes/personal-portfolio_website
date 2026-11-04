@@ -18,7 +18,6 @@ import ClientBanner from "./pages/clientPages/ClientBanner";
 import ClientNavbar from "./components/clientComponents/ClientNavbar";
 import SkillsSection from "./pages/clientPages/SkillsSection";
 import Topics from "./pages/adminPages/Topics";
-import CurrentLearnings from "./pages/adminPages/CurrentLearnings";
 import Cert from "./pages/adminPages/Cert";
 
 // Function for Background Image rotation:
@@ -90,7 +89,7 @@ const App = () => {
           <Route path="cert" element={<Cert />} />
           <Route path="achievements" element={<Achievements />} />
           <Route path="topics" element={<Topics />} />
-          <Route path="currently-learning" element={<CurrentLearnings />} />
+          {/* <Route path="currently-learning" element={<CurrentLearnings />} /> */}
           <Route path="reviews" element={<Reviews />} />
         </Route>
 
