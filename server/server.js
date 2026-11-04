@@ -10,6 +10,7 @@ import projectRoute from "./routes/project.routes.js";
 import experienceRoute from "./routes/experience.routes.js";
 import certRoute from "./routes/cert.routes.js";
 import reviewRoute from "./routes/review.routes.js";
+import topicRoute from "./routes/topic.routes.js";
 // import serviceRoute from "./routes/services.routes.js";
 
 const app = express();
@@ -60,6 +61,11 @@ app.use("/api/experience", experienceRoute);
 // http://localhost:3000/api/cert
 // https://kayesbackend.vercel.app/api/cert
 app.use("/api/cert", certRoute);
+
+// Topics:
+// http://localhost:3000/api/topic
+// https://kayesbackend.vercel.app/api/topic
+app.use("/api/topic", topicRoute);
 
 // Review:
 // http://localhost:3000/api/rev

@@ -9,6 +9,7 @@ const userSlice = createSlice({
     projects: [],
     education: [],
     certs: [],
+    topics: [],
   },
   reducers: {
     setUserData: (state, action) => {
@@ -33,6 +34,9 @@ const userSlice = createSlice({
     setCerts: (state, action) => {
       state.certs = action.payload;
     },
+    setTopics: (state, action) => {
+      state.topics = action.payload;
+    },
   },
 });
 
@@ -45,4 +49,5 @@ export const {
   setProjects,
   setEducation,
   setCerts,
+  setTopics,
 } = userSlice.actions;
