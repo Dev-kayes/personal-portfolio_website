@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import UserModel from "../models/user.Model.js";
 import topicModel from "../models/topic.Model.js";
 import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
@@ -93,6 +94,54 @@ export const getAdminTopic = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching topics:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error.",
+    });
+  }
+};
+
+export const deleteTopic = async (req, res) => {
+  try {
+    const { topicId } = req.params;
+    if (!mongoose.isValidObjectId(topicId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid topic ID.",
+      });
+    }
+
+    const user = await UserModel.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    const topic = await topicModel.findOneAndDelete({
+      _id: topicId,
+      userId: req.userId,
+    });
+    if (!topic) {
+      return res.status(404).json({
+        success: false,
+        message: "Topic not found.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Topic deleted successfully.",
+    });
+  } catch (error) {
+    console.error("Error deleting topic:", error);
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid topic ID.",
+      });
+    }
     return res.status(500).json({
       success: false,
       message: "Internal Server Error.",

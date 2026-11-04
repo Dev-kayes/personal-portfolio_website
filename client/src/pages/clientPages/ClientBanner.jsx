@@ -56,7 +56,7 @@ const ClientBanner = () => {
 
   return (
     <div className="w-full">
-      <div className="grid min-h-[calc(100svh-16rem)] w-full grid-cols-1 items-center gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-12 lg:py-10 xl:px-16">
+      <div className="grid min-h-[calc(100svh-5rem)] w-full grid-cols-1 items-center gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-12 lg:py-12 xl:px-16">
         <div className="mx-auto w-full max-w-4xl space-y-5 text-center lg:mx-0 lg:text-left">
           <p className="text-sm font-medium tracking-[0.12em] text-slate-300 sm:text-base">
             Hi, I&apos;m {profile?.name || "Kayes Molla"}
@@ -125,10 +125,15 @@ const ClientBanner = () => {
       {skills.length > 0 && (
         <section
           aria-label="Technologies I work with"
-          className="overflow-hidden border-y border-slate-800/80 bg-slate-950/65 py-3 sm:py-4"
+          className="relative overflow-hidden border-y border-indigo-400/15 bg-gradient-to-r from-slate-950 via-indigo-950/40 to-slate-950 py-7 shadow-[0_18px_60px_-30px_rgba(99,102,241,0.5)] sm:py-9"
         >
-          <div className="mb-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 sm:text-xs">
-            Technologies I work with
+          <div className="mb-5 text-center sm:mb-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-indigo-300 sm:text-sm">
+              My toolkit
+            </p>
+            <h2 className="mt-1 text-lg font-semibold text-white sm:text-xl">
+              Technologies I work with
+            </h2>
           </div>
           <div className="skill-marquee group w-full">
             <div className="skill-marquee-track flex w-max items-center">
@@ -136,13 +141,19 @@ const ClientBanner = () => {
                 <div
                   key={group}
                   aria-hidden={group === 1}
-                  className="skill-marquee-group flex shrink-0 items-center gap-8 pr-8 sm:gap-12 sm:pr-12"
+                  className="skill-marquee-group flex shrink-0 items-center gap-4 pr-4 sm:gap-6 sm:pr-6"
                 >
                   {skills.map((skill) => (
                     <div
                       key={`${group}-${skill._id}`}
-                      className="shrink-0"
+                      className="flex shrink-0 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-3 shadow-lg shadow-black/10 backdrop-blur-sm sm:px-6 sm:py-4"
                     >
+                      <img
+                        src={skill.skillImage}
+                        alt=""
+                        loading="lazy"
+                        className="h-9 w-9 shrink-0 object-contain sm:h-11 sm:w-11"
+                      />
                       <span className="whitespace-nowrap text-lg font-semibold text-white sm:text-xl">
                         {skill.skillName}
                       </span>

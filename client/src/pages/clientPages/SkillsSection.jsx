@@ -44,15 +44,18 @@ const SkillsSection = () => {
   }, []);
 
   return (
-    <div className="px-8 py-16 min-h-[50vh]">
-      <div className="max-w-6xl mx-auto space-y-10">
-        <div className="text-center space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">
+    <section className="min-h-[65vh] px-5 py-20 sm:px-8 sm:py-24">
+      <div className="mx-auto max-w-5xl space-y-12">
+        <div className="mx-auto max-w-2xl space-y-4 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-indigo-400 sm:text-sm">
+            What I work with
+          </p>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Skills &amp; Technologies
           </h2>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-400">
-            A combination of Modern technologies and tools that I use to build
-            fast , secure and scalable web applications
+          <p className="text-sm leading-relaxed text-slate-400 sm:text-base">
+            Modern tools and technologies I use to build fast, secure, and
+            scalable web applications.
           </p>
         </div>
 
@@ -69,7 +72,7 @@ const SkillsSection = () => {
             Skills will be added soon.
           </p>
         ) : (
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-5 md:grid-cols-2 md:gap-6">
             {skillSections.map(({ value, label }) => {
               const sectionSkills = skills.filter(
                 (skill) => skill.skillSection === value,
@@ -81,33 +84,38 @@ const SkillsSection = () => {
                 <section
                   key={value}
                   aria-labelledby={`skill-section-${value}`}
-                  className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6"
+                  className="rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/90 to-slate-950/80 p-5 shadow-xl shadow-black/10 backdrop-blur-sm sm:p-6"
                 >
                   <h3
                     id={`skill-section-${value}`}
-                    className="mb-5 flex items-center gap-2 text-xl font-semibold text-white"
+                    className="mb-5 flex items-center gap-3 border-b border-white/10 pb-4 text-lg font-semibold text-white sm:text-xl"
                   >
-                    <Code2
-                      aria-hidden="true"
-                      className="h-5 w-5 text-indigo-400"
-                    />
+                    <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-400/20 bg-indigo-400/10">
+                      <Code2
+                        aria-hidden="true"
+                        className="h-5 w-5 text-indigo-300"
+                      />
+                    </span>
                     {label}
                   </h3>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="space-y-3">
                     {sectionSkills.map((skill) => (
                       <div
                         key={skill._id}
-                        className="flex items-center gap-2.5 rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2"
+                        className="flex w-full items-center gap-4 rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 transition-colors hover:border-indigo-400/30 hover:bg-indigo-950/30 sm:px-5"
                       >
-                        <img
-                          src={skill.skillImage}
-                          alt=""
-                          loading="lazy"
-                          className="h-8 w-8 object-contain"
-                        />
-                        <span className="text-sm font-medium text-slate-200">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04]">
+                          <img
+                            src={skill.skillImage}
+                            alt=""
+                            loading="lazy"
+                            className="h-8 w-8 object-contain"
+                          />
+                        </span>
+                        <span className="min-w-0 flex-1 break-words text-base font-medium text-slate-100 sm:text-lg">
                           {skill.skillName}
                         </span>
+                        <span className="h-2 w-2 shrink-0 rounded-full bg-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.8)]" />
                       </div>
                     ))}
                   </div>
@@ -117,7 +125,7 @@ const SkillsSection = () => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

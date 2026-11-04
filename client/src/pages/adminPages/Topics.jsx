@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaHashtag, FaPlus } from "react-icons/fa";
+import { FiTrash2 } from "react-icons/fi";
 import useFetchedTopic from "../../../hooks/useFetchedTopic";
 
 const initialFormData = {
@@ -27,6 +28,7 @@ const Topics = () => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
+  const [deletingTopicId, setDeletingTopicId] = useState("");
 
   useEffect(() => {
     fetchedTopic();
@@ -120,6 +122,43 @@ const Topics = () => {
       );
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteTopic = async (topicId) => {
+    if (!window.confirm("Are you sure you want to delete this topic?")) return;
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please log in before deleting a topic.");
+      return;
+    }
+
+    setDeletingTopicId(topicId);
+    try {
+      const response = await axios.delete(
+        `${serverURL}/api/topic/delete-topic/${topicId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.data?.success) {
+        toast.error(response.data?.message || "Topic could not be deleted.");
+        return;
+      }
+
+      toast.success(response.data.message || "Topic deleted successfully.");
+      await fetchedTopic();
+    } catch (error) {
+      console.error("Failed to delete topic:", error);
+      toast.error(
+        error.response?.data?.message || "Topic could not be deleted.",
+      );
+    } finally {
+      setDeletingTopicId("");
     }
   };
 
@@ -332,6 +371,22 @@ const Topics = () => {
                           {item.description}
                         </p>
                       )}
+                      <div className="flex justify-end border-t border-slate-800 pt-3">
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteTopic(item._id)}
+                          disabled={deletingTopicId === item._id}
+                          aria-label={`Delete ${item.topic}`}
+                          className="inline-flex items-center gap-2 rounded-lg border border-red-900/70 px-3 py-2 text-xs font-medium text-red-300 transition-colors hover:border-red-700 hover:bg-red-950/50 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {deletingTopicId === item._id ? (
+                            <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-red-300 border-t-transparent" />
+                          ) : (
+                            <FiTrash2 aria-hidden="true" />
+                          )}
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </motion.article>
                 ))}

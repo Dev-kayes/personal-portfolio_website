@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import {
   addTopic,
+  deleteTopic,
   getAdminTopic,
   getPublicTopics,
 } from "../controllers/topics.controllers.js";
@@ -39,5 +40,6 @@ const uploadTopicImage = (req, res, next) => {
 topicRoute.post("/add-topic", isAuth, uploadTopicImage, addTopic);
 topicRoute.get("/public", getPublicTopics);
 topicRoute.get("/get-admin-topic", isAuth, getAdminTopic);
+topicRoute.delete("/delete-topic/:topicId", isAuth, deleteTopic);
 
 export default topicRoute;
