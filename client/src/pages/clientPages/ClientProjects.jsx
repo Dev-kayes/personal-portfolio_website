@@ -8,12 +8,16 @@ const ClientProjects = ({ limit }) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [retryCount, setRetryCount] = useState(0);
   const isFullPage = limit == null;
 
   useEffect(() => {
     const controller = new AbortController();
 
     const fetchProjects = async () => {
+      setLoading(true);
+      setError("");
+
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_SERVER_URI}/api/projects/public`,
@@ -31,7 +35,12 @@ const ClientProjects = ({ limit }) => {
       } catch (fetchError) {
         if (controller.signal.aborted) return;
         console.error("Failed to fetch public projects:", fetchError);
-        setError("Unable to load projects right now.");
+        setError(
+          fetchError.response?.data?.message ||
+            (fetchError.response
+              ? "The projects server could not load projects."
+              : "Could not connect to the projects server. Check your connection and try again."),
+        );
       } finally {
         if (!controller.signal.aborted) setLoading(false);
       }
@@ -39,7 +48,7 @@ const ClientProjects = ({ limit }) => {
 
     fetchProjects();
     return () => controller.abort();
-  }, []);
+  }, [retryCount]);
 
   const visibleProjects = limit ? projects.slice(0, limit) : projects;
 
@@ -78,9 +87,18 @@ const ClientProjects = ({ limit }) => {
           Loading projects...
         </p>
       ) : error ? (
-        <p role="status" className="py-12 text-center text-slate-400">
-          {error}
-        </p>
+        <div className="py-12 text-center">
+          <p role="status" className="text-slate-400">
+            {error}
+          </p>
+          <button
+            type="button"
+            onClick={() => setRetryCount((count) => count + 1)}
+            className="mt-4 rounded-lg border border-indigo-500/40 bg-indigo-500/10 px-4 py-2 text-sm font-medium text-indigo-200 transition-colors hover:border-indigo-400 hover:bg-indigo-500/20"
+          >
+            Try again
+          </button>
+        </div>
       ) : projects.length === 0 ? (
         <div className="rounded-2xl border border-slate-800 bg-slate-900/60 px-6 py-12 text-center">
           <FiFolder className="mx-auto h-8 w-8 text-slate-600" />
