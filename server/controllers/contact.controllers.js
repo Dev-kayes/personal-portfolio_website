@@ -47,8 +47,15 @@ export const sendContactMessage = async (req, res) => {
     });
   }
 
-  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+  const {
+    SMTP_USER,
+    SMTP_PASS,
+    SMTP_HOST = "smtp.gmail.com",
+    SMTP_PORT = "465",
+    SMTP_SECURE,
+  } = process.env;
+  const smtpPort = Number(SMTP_PORT);
+  if (!SMTP_USER || !SMTP_PASS || !Number.isInteger(smtpPort) || smtpPort <= 0) {
     console.error("Contact email is not configured: SMTP settings are missing.");
     return res.status(503).json({
       success: false,
@@ -59,8 +66,8 @@ export const sendContactMessage = async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({
       host: SMTP_HOST,
-      port: Number(SMTP_PORT),
-      secure: process.env.SMTP_SECURE === "true",
+      port: smtpPort,
+      secure: SMTP_SECURE ? SMTP_SECURE === "true" : smtpPort === 465,
       auth: {
         user: SMTP_USER,
         pass: SMTP_PASS,
