@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+} from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 
 const socialLinks = [
@@ -8,6 +14,8 @@ const socialLinks = [
   { key: "linkedIn", label: "LinkedIn", Icon: FaLinkedin },
   { key: "twitter", label: "X", Icon: BsTwitterX },
   { key: "facebook", label: "Facebook", Icon: FaFacebook },
+  { key: "instagram", label: "Instagram", Icon: FaInstagram },
+  { key: "youtube", label: "YouTube", Icon: FaYoutube },
 ];
 
 const ClientFooter = () => {
@@ -60,7 +68,7 @@ const ClientFooter = () => {
 
         <nav
           aria-label="Social media links"
-          className="flex items-center gap-2"
+          className="flex items-center justify-center gap-2 md:ml-auto"
         >
           {socialLinks.map(({ key, label, Icon }) =>
             profile?.[key] ? (

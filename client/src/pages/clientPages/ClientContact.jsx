@@ -36,7 +36,9 @@ const ClientContact = () => {
       );
 
       if (!response.data?.success) {
-        throw new Error(response.data?.message || "Unable to send your message.");
+        throw new Error(
+          response.data?.message || "Unable to send your message.",
+        );
       }
 
       setForm(initialForm);
@@ -129,7 +131,7 @@ const ClientContact = () => {
                 value={form.name}
                 onChange={handleChange}
                 maxLength={100}
-                placeholder="Jane Smith"
+                placeholder="Enter Your Name"
                 required
                 className="w-full rounded-xl border border-slate-700/80 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/20"
               />
@@ -149,7 +151,7 @@ const ClientContact = () => {
                 value={form.email}
                 onChange={handleChange}
                 maxLength={254}
-                placeholder="jane@example.com"
+                placeholder="Email@gmail.com"
                 required
                 className="w-full rounded-xl border border-slate-700/80 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/20"
               />

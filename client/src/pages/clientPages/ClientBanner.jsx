@@ -1,26 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {
-  FaGithub,
-  FaLinkedin,
-  FaFacebook,
-  FaInstagram,
-  FaYoutube,
   FaWhatsapp,
   FaEnvelope,
   FaPhone,
 } from "react-icons/fa";
-import { BsTwitterX } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
-
-const socialLinks = [
-  { key: "github", label: "GitHub", Icon: FaGithub },
-  { key: "linkedIn", label: "LinkedIn", Icon: FaLinkedin },
-  { key: "twitter", label: "X", Icon: BsTwitterX },
-  { key: "facebook", label: "Facebook", Icon: FaFacebook },
-  { key: "instagram", label: "Instagram", Icon: FaInstagram },
-  { key: "youtube", label: "YouTube", Icon: FaYoutube },
-];
 
 const ClientBanner = () => {
   const [profile, setProfile] = useState(null);
@@ -187,22 +172,6 @@ I'm always open to learning opportunities, collaboration, and exciting developme
             </a>
           </div>
 
-          <div className="flex justify-center gap-3 pt-1 lg:justify-start">
-            {socialLinks.map(({ key, label, Icon }) =>
-              profile?.[key] ? (
-                <a
-                  key={key}
-                  href={profile[key]}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={label}
-                  className="rounded-xl border border-slate-800 bg-slate-900/70 p-3 text-slate-300 transition-colors hover:border-indigo-500/50 hover:text-white"
-                >
-                  <Icon className="h-5 w-5" />
-                </a>
-              ) : null,
-            )}
-          </div>
         </div>
 
         <div className="mx-auto flex aspect-square w-full max-w-[16rem] items-center justify-center overflow-hidden rounded-full border-4 border-indigo-400/30 bg-slate-900 shadow-2xl shadow-indigo-950/40 sm:max-w-[20rem] lg:max-w-none lg:w-[min(100%,30rem)]">
