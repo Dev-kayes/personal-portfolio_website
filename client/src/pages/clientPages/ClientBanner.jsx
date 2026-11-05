@@ -6,12 +6,21 @@ import {
   FaPhone,
   FaGithub,
   FaLinkedin,
-  FaTwitter,
   FaInstagram,
   FaFacebook,
   FaYoutube,
 } from "react-icons/fa";
+import { BsTwitterX } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
+
+const socialLinks = [
+  { key: "github", label: "GitHub", Icon: FaGithub },
+  { key: "linkedIn", label: "LinkedIn", Icon: FaLinkedin },
+  { key: "twitter", label: "X", Icon: BsTwitterX },
+  { key: "facebook", label: "Facebook", Icon: FaFacebook },
+  { key: "instagram", label: "Instagram", Icon: FaInstagram },
+  { key: "youtube", label: "YouTube", Icon: FaYoutube },
+];
 
 const ClientBanner = () => {
   const [profile, setProfile] = useState(null);
@@ -67,46 +76,6 @@ const ClientBanner = () => {
 
     return () => controller.abort();
   }, []);
-
-  // Social profile links
-  const socialLinks = [
-    {
-      name: "GitHub",
-      url: profile?.github,
-      icon: FaGithub,
-      hover: "hover:text-white hover:border-white/40",
-    },
-    {
-      name: "LinkedIn",
-      url: profile?.linkedIn,
-      icon: FaLinkedin,
-      hover: "hover:text-blue-400 hover:border-blue-400/40",
-    },
-    {
-      name: "Twitter / X",
-      url: profile?.twitter,
-      icon: FaTwitter,
-      hover: "hover:text-sky-400 hover:border-sky-400/40",
-    },
-    {
-      name: "Instagram",
-      url: profile?.instagram,
-      icon: FaInstagram,
-      hover: "hover:text-pink-400 hover:border-pink-400/40",
-    },
-    {
-      name: "Facebook",
-      url: profile?.facebook,
-      icon: FaFacebook,
-      hover: "hover:text-blue-500 hover:border-blue-500/40",
-    },
-    {
-      name: "YouTube",
-      url: profile?.youtube,
-      icon: FaYoutube,
-      hover: "hover:text-red-500 hover:border-red-500/40",
-    },
-  ].filter((social) => social.url?.trim());
 
   return (
     <div className="w-full">
@@ -207,32 +176,27 @@ const ClientBanner = () => {
           )}
 
           {/* Social Profiles */}
-          {socialLinks.length > 0 && (
-            <div className="space-y-3 pt-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Connect with me
-              </p>
-
-              <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
-                {socialLinks.map((social) => {
-                  const Icon = social.icon;
-
-                  return (
-                    <a
-                      key={social.name}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.name}
-                      title={social.name}
-                      className={`flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] text-xl text-slate-300 transition-all duration-300 hover:-translate-y-1 hover:bg-white/10 ${social.hover}`}
-                    >
-                      <Icon aria-hidden="true" />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
+          {socialLinks.some(({ key }) => profile?.[key]?.trim()) && (
+            <nav
+              aria-label="Social media links"
+              className="flex flex-wrap justify-center gap-2 pt-2 lg:justify-start"
+            >
+              {socialLinks.map(({ key, label, Icon }) =>
+                profile?.[key]?.trim() ? (
+                  <a
+                    key={key}
+                    href={profile[key]}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={label}
+                    title={label}
+                    className="rounded-lg border border-slate-800 bg-slate-900/70 p-2.5 text-slate-400 transition-colors hover:border-indigo-500/50 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+                  >
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                ) : null,
+              )}
+            </nav>
           )}
 
           {/* Action Buttons */}
