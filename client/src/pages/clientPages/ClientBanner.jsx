@@ -88,7 +88,8 @@ const ClientBanner = () => {
             </span>
           </h1>
           <p className="max-w-3xl whitespace-pre-line text-base leading-relaxed text-slate-300 sm:text-lg lg:text-xl">
-            {profile?.intro ||
+            {profile?.intro}
+            {/* ||
               `I'm Md. Kayes Molla, a passionate MERN Stack Developer focused on building modern, responsive, and user-friendly web applications.
 
 I specialize in frontend and backend development using HTML, CSS, JavaScript, React.js, Node.js, Express.js, and MongoDB. I enjoy transforming ideas into functional digital experiences with clean code, intuitive interfaces, and efficient backend solutions.
@@ -97,7 +98,7 @@ I'm continuously learning new technologies, improving my problem-solving skills,
 
 My goal is to create meaningful digital products that solve real-world problems and deliver great user experiences.
 
-I'm always open to learning opportunities, collaboration, and exciting development projects.`}
+I'm always open to learning opportunities, collaboration, and exciting development projects.` */}
           </p>
 
           {profile?.description && (

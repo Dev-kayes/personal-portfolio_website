@@ -10,10 +10,13 @@ const initialForm = {
   website: "",
 };
 
+const contactEmail = "devkayesmolla@gmail.com";
+
 const ClientContact = () => {
   const [form, setForm] = useState(initialForm);
   const [sending, setSending] = useState(false);
   const [feedback, setFeedback] = useState({ type: "", message: "" });
+  const [fallbackMailto, setFallbackMailto] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,6 +27,7 @@ const ClientContact = () => {
     event.preventDefault();
     setSending(true);
     setFeedback({ type: "", message: "" });
+    setFallbackMailto("");
 
     try {
       const response = await axios.post(
@@ -42,6 +46,24 @@ const ClientContact = () => {
       });
     } catch (error) {
       console.error("Failed to send contact message:", error);
+      const canUseEmailFallback =
+        !error.response || error.response.status >= 500;
+      const emailSubject = encodeURIComponent(
+        form.subject.trim() || "Portfolio contact",
+      );
+      const emailBody = encodeURIComponent(
+        [
+          `Name: ${form.name.trim()}`,
+          `Email: ${form.email.trim()}`,
+          "",
+          form.message.trim(),
+        ].join("\n"),
+      );
+      if (canUseEmailFallback) {
+        setFallbackMailto(
+          `mailto:${contactEmail}?subject=${emailSubject}&body=${emailBody}`,
+        );
+      }
       setFeedback({
         type: "error",
         message:
@@ -79,7 +101,7 @@ const ClientContact = () => {
           </p>
 
           <a
-            href="mailto:devkayesmolla@gmail.com"
+            href={`mailto:${contactEmail}`}
             className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-indigo-200 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-300"
           >
             devkayesmolla@gmail.com
@@ -194,14 +216,26 @@ const ClientContact = () => {
           </div>
 
           {feedback.message && (
-            <p
-              role="status"
-              className={`text-sm ${
-                feedback.type === "success" ? "text-emerald-300" : "text-rose-300"
-              }`}
-            >
-              {feedback.message}
-            </p>
+            <div>
+              <p
+                role="status"
+                className={`text-sm ${
+                  feedback.type === "success"
+                    ? "text-emerald-300"
+                    : "text-rose-300"
+                }`}
+              >
+                {feedback.message}
+              </p>
+              {fallbackMailto && (
+                <a
+                  href={fallbackMailto}
+                  className="mt-2 inline-flex text-sm font-medium text-indigo-300 underline underline-offset-4 hover:text-white"
+                >
+                  Open your email app with this message
+                </a>
+              )}
+            </div>
           )}
 
           <button
