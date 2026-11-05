@@ -7,12 +7,12 @@ import jwt from "jsonwebtoken";
 // http://localhost:3000/api/auth/register
 export const registerUser = async (req, res) => {
   try {
-    // if (process.env.ALLOW_ADMIN_REGISTER !== true) {
-    //   return res.status(403).json({
-    //     success: false,
-    //     message: "Admin registration is disabled",
-    //   });
-    // }
+    if (process.env.ALLOW_ADMIN_REGISTER !== true) {
+      return res.status(403).json({
+        success: false,
+        message: "Admin registration is disabled",
+      });
+    }
     const existingAdmin = await UserModel.findOne({ role: "admin" });
 
     if (existingAdmin) {
