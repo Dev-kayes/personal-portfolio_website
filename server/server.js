@@ -12,6 +12,7 @@ import certRoute from "./routes/cert.routes.js";
 import reviewRoute from "./routes/review.routes.js";
 import topicRoute from "./routes/topic.routes.js";
 import contactRoute from "./routes/contact.routes.js";
+import contactRoute from "./routes/contact.routes.js";
 // import serviceRoute from "./routes/services.routes.js";
 
 const app = express();
@@ -80,6 +81,11 @@ app.use("/api/contact", contactRoute);
 // http://localhost:3000/api/service
 // https://kayesbackend.vercel.app/api/service
 // app.use("/api/service", serviceRoute);
+
+// Service:
+// http://localhost:3000/api/contact
+// https://kayesbackend.vercel.app/api/contact
+app.use("/api/contact", contactRoute);
 
 //=====================================================================
 if (process.env.NODE_ENV === "development") {
