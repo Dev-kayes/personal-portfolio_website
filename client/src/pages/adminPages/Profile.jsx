@@ -8,7 +8,6 @@ import {
   FiSave,
   FiUser,
   FiMapPin,
-  FiGlobe,
   FiShare2,
 } from "react-icons/fi";
 
@@ -45,7 +44,22 @@ const Profile = () => {
   const [profilePicPreview, setProfilePicPreview] = useState(
     userData?.profilePic || defaultProfilePicPreview,
   );
+  const [profileUserData, setProfileUserData] = useState(userData);
   const profilePicInputRef = useRef(null);
+
+  if (userData !== profileUserData) {
+    setProfileUserData(userData);
+    setProfileData(
+      Object.fromEntries(
+        Object.keys(initialProfileData).map((key) => [
+          key,
+          userData?.[key] || "",
+        ]),
+      ),
+    );
+    setIsAvailable(userData?.isAvailable ?? true);
+    setProfilePicPreview(userData?.profilePic || defaultProfilePicPreview);
+  }
 
   useEffect(
     () => () => {

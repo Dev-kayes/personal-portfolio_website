@@ -1,18 +1,39 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaWhatsapp,
+  FaEnvelope,
+  FaPhone,
+} from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
+import { FiMapPin } from "react-icons/fi";
 
 const socialLinks = [
   { key: "github", label: "GitHub", Icon: FaGithub },
   { key: "linkedIn", label: "LinkedIn", Icon: FaLinkedin },
   { key: "twitter", label: "X", Icon: BsTwitterX },
   { key: "facebook", label: "Facebook", Icon: FaFacebook },
+  { key: "instagram", label: "Instagram", Icon: FaInstagram },
+  { key: "youtube", label: "YouTube", Icon: FaYoutube },
 ];
 
 const ClientBanner = () => {
   const [profile, setProfile] = useState(null);
   const [skills, setSkills] = useState([]);
+  const location = [
+    profile?.address,
+    profile?.city,
+    profile?.state,
+    profile?.country,
+    profile?.PostalCode,
+  ]
+    .filter(Boolean)
+    .join(", ");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -66,10 +87,89 @@ const ClientBanner = () => {
               {profile?.title || "Software Developer"}
             </span>
           </h1>
-          <p className="max-w-3xl text-base leading-relaxed text-slate-300 sm:text-lg lg:text-xl">
+          <p className="max-w-3xl whitespace-pre-line text-base leading-relaxed text-slate-300 sm:text-lg lg:text-xl">
             {profile?.intro ||
-              "I build exceptional digital experiences by combining clean code, modern web technologies, and AI-powered solutions. Building smarter products for real-world problems."}
+              `I'm Md. Kayes Molla, a passionate MERN Stack Developer focused on building modern, responsive, and user-friendly web applications.
+
+I specialize in frontend and backend development using HTML, CSS, JavaScript, React.js, Node.js, Express.js, and MongoDB. I enjoy transforming ideas into functional digital experiences with clean code, intuitive interfaces, and efficient backend solutions.
+
+I'm continuously learning new technologies, improving my problem-solving skills, and exploring modern development tools to build better software solutions.
+
+My goal is to create meaningful digital products that solve real-world problems and deliver great user experiences.
+
+I'm always open to learning opportunities, collaboration, and exciting development projects.`}
           </p>
+
+          {profile?.description && (
+            <div className="max-w-3xl space-y-2 text-slate-300">
+              <h2 className="text-lg font-semibold text-white">About me</h2>
+              <p className="whitespace-pre-line text-sm leading-relaxed sm:text-base">
+                {profile.description}
+              </p>
+            </div>
+          )}
+
+          {typeof profile?.isAvailable === "boolean" && (
+            <p
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm ${
+                profile.isAvailable
+                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                  : "border-slate-700 bg-slate-800/60 text-slate-300"
+              }`}
+            >
+              <span
+                className={`h-2 w-2 rounded-full ${
+                  profile.isAvailable ? "bg-emerald-400" : "bg-slate-500"
+                }`}
+              />
+              {profile.isAvailable
+                ? "Available for projects"
+                : "Not currently available"}
+            </p>
+          )}
+
+          {(profile?.email ||
+            profile?.phone ||
+            profile?.whatsAppNumber ||
+            location) && (
+            <div className="flex flex-wrap justify-center gap-x-5 gap-y-3 text-sm text-slate-300 lg:justify-start">
+              {profile?.email && (
+                <a
+                  href={`mailto:${profile.email}`}
+                  className="inline-flex items-center gap-2 transition-colors hover:text-white"
+                >
+                  <FaEnvelope aria-hidden="true" />
+                  {profile.email}
+                </a>
+              )}
+              {profile?.phone && (
+                <a
+                  href={`tel:${profile.phone}`}
+                  className="inline-flex items-center gap-2 transition-colors hover:text-white"
+                >
+                  <FaPhone aria-hidden="true" />
+                  {profile.phone}
+                </a>
+              )}
+              {profile?.whatsAppNumber && (
+                <a
+                  href={`https://wa.me/${profile.whatsAppNumber.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 transition-colors hover:text-white"
+                >
+                  <FaWhatsapp aria-hidden="true" />
+                  {profile.whatsAppNumber}
+                </a>
+              )}
+              {location && (
+                <span className="inline-flex items-center gap-2">
+                  <FiMapPin aria-hidden="true" />
+                  {location}
+                </span>
+              )}
+            </div>
+          )}
 
           <div className="flex flex-wrap justify-center gap-3 pt-1 lg:justify-start">
             <a

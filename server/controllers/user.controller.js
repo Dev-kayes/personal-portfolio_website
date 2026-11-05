@@ -24,7 +24,7 @@ export const getCurrentUser = async (req, res) => {
 export const getPublicProfile = async (_req, res) => {
   try {
     const profile = await UserModel.findOne({ role: "admin" }).select(
-      "name title intro profilePic github linkedIn twitter facebook isAvailable",
+      "name email phone whatsAppNumber address city state country PostalCode title intro description profilePic github linkedIn instagram facebook twitter youtube isAvailable",
     );
 
     if (!profile) {
@@ -64,6 +64,7 @@ export const updateProfile = async (req, res) => {
       city,
       state,
       country,
+      PostalCode,
       title,
       intro,
       description,
@@ -91,6 +92,7 @@ export const updateProfile = async (req, res) => {
         city,
         state,
         country,
+        PostalCode,
         title,
         intro,
         description,

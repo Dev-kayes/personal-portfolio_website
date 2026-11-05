@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Code2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Code2 } from "lucide-react";
 
 const skillSections = [
   { value: "FrontEnd", label: "Frontend" },
@@ -8,6 +8,75 @@ const skillSections = [
   { value: "Database", label: "Database" },
   { value: "Tools & others", label: "Tools & Others" },
 ];
+
+const SkillCarousel = ({ skills, label }) => {
+  const [page, setPage] = useState(0);
+  const pages = Array.from(
+    { length: Math.ceil(skills.length / 3) },
+    (_, index) => skills.slice(index * 3, index * 3 + 3),
+  );
+  const pageCount = pages.length;
+  const visibleSkills = pages[page] || [];
+
+  return (
+    <div>
+      <div
+        role="region"
+        aria-label={`${label} technologies`}
+        aria-live="polite"
+        className="space-y-3"
+      >
+        {visibleSkills.map((skill) => (
+          <div
+            key={skill._id}
+            className="flex w-full items-center gap-4 rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 transition-colors hover:border-indigo-400/30 hover:bg-indigo-950/30 sm:px-5"
+          >
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] sm:h-12 sm:w-12">
+              <img
+                src={skill.skillImage}
+                alt=""
+                loading="lazy"
+                className="h-8 w-8 object-contain sm:h-9 sm:w-9"
+              />
+            </span>
+            <span className="min-w-0 flex-1 break-words text-base font-medium text-slate-100 sm:text-lg">
+              {skill.skillName}
+            </span>
+            <span className="h-2 w-2 shrink-0 rounded-full bg-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.8)]" />
+          </div>
+        ))}
+      </div>
+
+      {pageCount > 1 && (
+        <div className="mt-4 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            aria-label={`Previous ${label} technologies`}
+            onClick={() => setPage((currentPage) => Math.max(0, currentPage - 1))}
+            disabled={page === 0}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-indigo-400/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+          </button>
+          <span className="text-sm text-slate-400">
+            {page + 1} / {pageCount}
+          </span>
+          <button
+            type="button"
+            aria-label={`Next ${label} technologies`}
+            onClick={() =>
+              setPage((currentPage) => Math.min(pageCount - 1, currentPage + 1))
+            }
+            disabled={page >= pageCount - 1}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-indigo-400/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const SkillsSection = () => {
   const [skills, setSkills] = useState([]);
@@ -98,27 +167,7 @@ const SkillsSection = () => {
                     </span>
                     {label}
                   </h3>
-                  <div className="space-y-3">
-                    {sectionSkills.map((skill) => (
-                      <div
-                        key={skill._id}
-                        className="flex w-full items-center gap-4 rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 transition-colors hover:border-indigo-400/30 hover:bg-indigo-950/30 sm:px-5"
-                      >
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04]">
-                          <img
-                            src={skill.skillImage}
-                            alt=""
-                            loading="lazy"
-                            className="h-8 w-8 object-contain"
-                          />
-                        </span>
-                        <span className="min-w-0 flex-1 break-words text-base font-medium text-slate-100 sm:text-lg">
-                          {skill.skillName}
-                        </span>
-                        <span className="h-2 w-2 shrink-0 rounded-full bg-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.8)]" />
-                      </div>
-                    ))}
-                  </div>
+                  <SkillCarousel skills={sectionSkills} label={label} />
                 </section>
               );
             })}
