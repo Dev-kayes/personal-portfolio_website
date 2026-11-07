@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router";
 import { setToken } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-// New imports for UI enhancements
 import {
   FiMail,
   FiLock,
@@ -15,9 +14,6 @@ import {
 } from "react-icons/fi";
 
 const Login = (e) => {
-  // ==========================================
-  // EXISTING LOGIC PRESERVED EXACTLY
-  // ==========================================
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -54,23 +50,18 @@ const Login = (e) => {
         setLoading(false);
       }
     } catch (error) {
-      console.error(error, "error in Login user");
       toast.error(error?.response?.data?.message || "something went wrong");
     } finally {
       setLoading(false);
     }
   };
-  // ==========================================
 
   return (
     <div className="min-h-screen w-full bg-[#09090B] flex items-center justify-center relative overflow-hidden font-sans selection:bg-indigo-500/30">
-      {/* BACKGROUND EFFECTS: Command Center Grid & Ambient Glow */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-indigo-500/20 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none"></div>
 
-      {/* MAIN CONTAINER */}
       <div className="relative z-10 w-full max-w-md px-6 py-12">
-        {/* Header / Brand */}
         <div className="flex flex-col items-center text-center mb-10">
           <div className="w-12 h-12 bg-white/[0.03] border border-white/10 rounded-xl flex items-center justify-center mb-5 shadow-[0_0_15px_rgba(255,255,255,0.05)] backdrop-blur-md">
             <FiCommand className="text-2xl text-white" />
@@ -86,10 +77,8 @@ const Login = (e) => {
           </p>
         </div>
 
-        {/* Login Form Surface */}
         <div className="bg-[#121214]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl">
           <form onSubmit={loginUserHandler} className="space-y-5">
-            {/* Email Input */}
             <div>
               <label
                 htmlFor="email"
@@ -113,8 +102,6 @@ const Login = (e) => {
                 />
               </div>
             </div>
-
-            {/* Password Input */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label
@@ -141,7 +128,6 @@ const Login = (e) => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -161,8 +147,6 @@ const Login = (e) => {
             </button>
           </form>
         </div>
-
-        {/* Footer info (Optional Context) */}
         <div className="mt-8 text-center">
           <p className="text-sm text-zinc-400">
             Don't have an account?{" "}

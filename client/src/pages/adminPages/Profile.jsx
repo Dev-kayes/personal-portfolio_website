@@ -3,13 +3,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../redux/userSlice";
-import {
-  FiCamera,
-  FiSave,
-  FiUser,
-  FiMapPin,
-  FiShare2,
-} from "react-icons/fi";
+import { FiCamera, FiSave, FiUser, FiMapPin, FiShare2 } from "react-icons/fi";
 
 const initialProfileData = {
   name: "",
@@ -142,7 +136,6 @@ const Profile = () => {
 
   return (
     <section className="max-w-5xl mx-auto space-y-8 animate-fade-in">
-      {/* Header Section */}
       <div className="border-b border-zinc-800 pb-5">
         <h1 className="text-2xl sm:text-3xl font-bold text-zinc-100 tracking-tight">
           Profile Settings
@@ -154,7 +147,6 @@ const Profile = () => {
       </div>
 
       <form className="space-y-8" onSubmit={onSubmitHandler}>
-        {/* Profile Picture Card */}
         <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 backdrop-blur-sm shadow-xl flex flex-col sm:flex-row items-center gap-6 transition-all duration-300 hover:border-zinc-700">
           <div className="relative group">
             <img
@@ -204,7 +196,6 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Availability Toggle Box */}
         <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-5 backdrop-blur-sm shadow-xl flex items-center justify-between transition-all duration-300 hover:border-zinc-700">
           <div>
             <span className="text-sm font-medium text-zinc-200 block">
@@ -226,7 +217,6 @@ const Profile = () => {
           </label>
         </div>
 
-        {/* Personal Details Section */}
         <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm shadow-xl space-y-6">
           <div className="flex items-center gap-2 border-b border-zinc-800 pb-3 text-zinc-200 font-medium">
             <FiUser className="text-indigo-400" />
@@ -282,7 +272,6 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Address & Location Section */}
         <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm shadow-xl space-y-6">
           <div className="flex items-center gap-2 border-b border-zinc-800 pb-3 text-zinc-200 font-medium">
             <FiMapPin className="text-indigo-400" />
@@ -315,7 +304,6 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Social Links Section */}
         <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm shadow-xl space-y-6">
           <div className="flex items-center gap-2 border-b border-zinc-800 pb-3 text-zinc-200 font-medium">
             <FiShare2 className="text-indigo-400" />
@@ -349,7 +337,6 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Action Button */}
         <div className="flex justify-end pt-2">
           <button
             type="submit"

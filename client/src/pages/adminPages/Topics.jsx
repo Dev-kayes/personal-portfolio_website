@@ -111,7 +111,6 @@ const Topics = () => {
         toast.error(response.data?.message || "Topic could not be added.");
       }
     } catch (error) {
-      console.error("Failed to add topic:", error);
       toast.error(
         error.response?.data?.message ||
           (typeof error.response?.data === "string"
@@ -153,7 +152,6 @@ const Topics = () => {
       toast.success(response.data.message || "Topic deleted successfully.");
       await fetchedTopic();
     } catch (error) {
-      console.error("Failed to delete topic:", error);
       toast.error(
         error.response?.data?.message || "Topic could not be deleted.",
       );

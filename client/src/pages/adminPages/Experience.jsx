@@ -115,12 +115,9 @@ const Experience = () => {
         setExperiencesLoading(true);
         setRefreshExperiences((currentRefresh) => currentRefresh + 1);
       } else {
-        toast.error(
-          response.data?.message || "Unable to add your experience.",
-        );
+        toast.error(response.data?.message || "Unable to add your experience.");
       }
     } catch (error) {
-      console.error("Failed to add experience:", error);
       toast.error(
         error.response?.data?.message ||
           "Something went wrong while adding your experience.",
@@ -167,7 +164,6 @@ const Experience = () => {
         );
       }
     } catch (error) {
-      console.error("Failed to delete experience:", error);
       toast.error(
         error.response?.data?.message ||
           "Something went wrong while deleting your experience.",

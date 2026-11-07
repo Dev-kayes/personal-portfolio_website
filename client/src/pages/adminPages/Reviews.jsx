@@ -35,7 +35,6 @@ const Reviews = () => {
         if (active) setReviews(loadedReviews);
       })
       .catch((error) => {
-        console.error("Failed to fetch reviews:", error);
         toast.error(error.response?.data?.message || error.message);
       });
 
@@ -72,7 +71,6 @@ const Reviews = () => {
         try {
           setReviews(await fetchReviews());
         } catch (error) {
-          console.error("Failed to refresh reviews:", error);
           toast.error(
             error.response?.data?.message ||
               "Review was added, but the list could not be refreshed.",
@@ -82,7 +80,6 @@ const Reviews = () => {
         toast.error(response.data?.message || "Unable to add review.");
       }
     } catch (error) {
-      console.error("Failed to add review:", error);
       toast.error(error.response?.data?.message || "Unable to add review.");
     } finally {
       setLoading(false);
@@ -106,7 +103,6 @@ const Reviews = () => {
         toast.error(response.data?.message || "Unable to delete review.");
       }
     } catch (error) {
-      console.error("Failed to delete review:", error);
       toast.error(error.response?.data?.message || "Unable to delete review.");
     } finally {
       setDeletingReviewId(null);
@@ -193,7 +189,8 @@ const Reviews = () => {
                   htmlFor="review-image"
                   className="block text-xs font-medium text-slate-400"
                 >
-                  Profile Image URL <span className="text-slate-500">(optional)</span>
+                  Profile Image URL{" "}
+                  <span className="text-slate-500">(optional)</span>
                 </label>
                 <input
                   id="review-image"

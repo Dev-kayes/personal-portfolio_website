@@ -31,7 +31,6 @@ const ClientTopicCovered = () => {
         setTopics(response.data.topics);
       } catch (fetchError) {
         if (controller.signal.aborted) return;
-        console.error("Failed to fetch topics:", fetchError);
         const apiMessage = fetchError.response?.data?.message;
         setError(
           apiMessage ||

@@ -11,20 +11,16 @@ const useFetchedCert = () => {
 
   const fetchedCert = useCallback(async () => {
     try {
-      const response = await axios.get(
-        `${serverURL}/api/cert/get-admin-cert`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await axios.get(`${serverURL}/api/cert/get-admin-cert`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       if (response.data?.success) {
         dispatch(setCerts(response.data.getAdminCert));
       }
     } catch (error) {
-      console.error("Failed to fetch certificates:", error);
       toast.error(
         error.response?.data?.message || "Error in Fetching Certificates",
       );

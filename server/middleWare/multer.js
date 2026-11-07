@@ -21,8 +21,7 @@ const fileFilter = (req, file, cb) => {
 const limits = {
   fileSize: 1024 * 1024 * 5,
 };
-// As we deployed it inside vercel and vercel is a serverless platform, so it is not possible to store the images inside the server. So we have to store the images inside the client side. That's why we are using multer to store the images inside DiskStorage.
-// we have to use memoryStorage
+
 const upload = multer({
   storage,
   limits,

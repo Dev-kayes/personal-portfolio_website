@@ -133,21 +133,26 @@ const Cert = () => {
       );
 
       if (response.data?.success) {
-        toast.success(response.data.message || "Certificate added successfully.");
+        toast.success(
+          response.data.message || "Certificate added successfully.",
+        );
         setFormData(initialFormData);
         setImage(null);
         setPreview("");
         if (imageInput.current) imageInput.current.value = "";
         await fetchedCert();
       } else {
-        toast.error(response.data?.message || "Certificate could not be added.");
+        toast.error(
+          response.data?.message || "Certificate could not be added.",
+        );
       }
     } catch (error) {
-      console.error("Failed to add certificate:", error);
       const responseMessage = error.response?.data?.message;
       toast.error(
         responseMessage ||
-          (typeof error.response?.data === "string" ? error.response.data : null) ||
+          (typeof error.response?.data === "string"
+            ? error.response.data
+            : null) ||
           error.message ||
           "Something went wrong.",
       );
@@ -193,7 +198,10 @@ const Cert = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1.5">
-                <label htmlFor="institution" className="block text-xs font-medium text-slate-400">
+                <label
+                  htmlFor="institution"
+                  className="block text-xs font-medium text-slate-400"
+                >
                   Institution
                 </label>
                 <input
@@ -209,7 +217,10 @@ const Cert = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="title" className="block text-xs font-medium text-slate-400">
+                <label
+                  htmlFor="title"
+                  className="block text-xs font-medium text-slate-400"
+                >
                   Certificate / Course Title
                 </label>
                 <input
@@ -225,7 +236,10 @@ const Cert = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="topicsCovered" className="block text-xs font-medium text-slate-400">
+                <label
+                  htmlFor="topicsCovered"
+                  className="block text-xs font-medium text-slate-400"
+                >
                   Topics Covered
                 </label>
                 <textarea
@@ -244,7 +258,10 @@ const Cert = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="certificateImage" className="block text-xs font-medium text-slate-400">
+                <label
+                  htmlFor="certificateImage"
+                  className="block text-xs font-medium text-slate-400"
+                >
                   Certificate Image
                 </label>
                 <input
@@ -267,7 +284,10 @@ const Cert = () => {
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-1.5">
-                  <label htmlFor="startDate" className="block text-xs font-medium text-slate-400">
+                  <label
+                    htmlFor="startDate"
+                    className="block text-xs font-medium text-slate-400"
+                  >
                     Start Date
                   </label>
                   <input
@@ -282,7 +302,10 @@ const Cert = () => {
                 </div>
                 {!formData.isCurrentlyStudying && (
                   <div className="space-y-1.5">
-                    <label htmlFor="endDate" className="block text-xs font-medium text-slate-400">
+                    <label
+                      htmlFor="endDate"
+                      className="block text-xs font-medium text-slate-400"
+                    >
                       End Date
                     </label>
                     <input
@@ -312,7 +335,10 @@ const Cert = () => {
               </label>
 
               <div className="space-y-1.5">
-                <label htmlFor="link" className="block text-xs font-medium text-slate-400">
+                <label
+                  htmlFor="link"
+                  className="block text-xs font-medium text-slate-400"
+                >
                   Certificate Link
                 </label>
                 <input
@@ -438,7 +464,6 @@ const Cert = () => {
                           </a>
                         </div>
                       </div>
-
                     </motion.article>
                   ))}
                 </AnimatePresence>

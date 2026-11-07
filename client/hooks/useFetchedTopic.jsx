@@ -24,7 +24,6 @@ const useFetchedTopic = () => {
         dispatch(setTopics(response.data.getAdminTopic));
       }
     } catch (error) {
-      console.error("Failed to fetch topics:", error);
       toast.error(error.response?.data?.message || "Error in Fetching Topics");
     }
   }, [serverURL, token, dispatch]);

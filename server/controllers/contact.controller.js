@@ -4,7 +4,6 @@ export const sendContactMessage = async (req, res) => {
   try {
     const { name, email, subject, message, website } = req.body;
 
-    // Honeypot spam protection
     if (website) {
       return res.status(200).json({
         success: true,
@@ -41,8 +40,6 @@ ${message}
       message: "Your message has been sent successfully!",
     });
   } catch (error) {
-    console.error("CONTACT EMAIL ERROR:", error);
-
     return res.status(500).json({
       success: false,
       message: "Failed to send message. Please try again later.",

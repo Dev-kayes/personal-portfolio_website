@@ -17,17 +17,13 @@ const ClientTestimonials = () => {
           { signal: controller.signal },
         );
 
-        if (
-          !response.data?.success ||
-          !Array.isArray(response.data.reviews)
-        ) {
+        if (!response.data?.success || !Array.isArray(response.data.reviews)) {
           throw new Error("The testimonials response was invalid.");
         }
 
         setTestimonials(response.data.reviews);
       } catch (fetchError) {
         if (controller.signal.aborted) return;
-        console.error("Failed to fetch public testimonials:", fetchError);
         setError("Unable to load testimonials right now.");
       } finally {
         if (!controller.signal.aborted) setLoading(false);

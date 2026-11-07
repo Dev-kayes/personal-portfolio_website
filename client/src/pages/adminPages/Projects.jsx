@@ -48,8 +48,6 @@ const Projects = () => {
     setProjectImage(file);
     setPreview(URL.createObjectURL(file));
   };
-
-  // Cleanup object URL on unmount to prevent memory leaks
   useEffect(() => {
     return () => {
       if (preview) {
@@ -93,7 +91,7 @@ const Projects = () => {
       );
       if (response.data?.success) {
         toast.success(response.data.message || "Project added successfully!");
-        // Reset form fields after successful submission
+
         setTitle("");
         setDesc("");
         setGitHub("");
@@ -106,20 +104,17 @@ const Projects = () => {
         const fileInput = document.getElementById("project-file-input");
         if (fileInput) fileInput.value = "";
 
-        // Refresh project list
         fetchedProject();
       } else {
         toast.error(response.data?.message || "Project could not be added.");
       }
     } catch (error) {
-      console.error(error);
       toast.error(error?.response?.data?.message || "Something went wrong.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Handler to delete a project
   const handleDelete = async (projectId) => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -133,7 +128,6 @@ const Projects = () => {
 
     setDeletingId(projectId);
     try {
-      // Adjust the endpoint path if your backend uses a different delete route (e.g., `${serverURL}/api/projects/${projectId}`)
       const response = await axios.delete(
         `${serverURL}/api/projects/delete/${projectId}`,
         {
@@ -150,17 +144,11 @@ const Projects = () => {
         toast.error(response.data?.message || "Failed to delete project.");
       }
     } catch (error) {
-      console.error(error);
       toast.error(error?.response?.data?.message || "Something went wrong.");
     } finally {
       setDeletingId(null);
     }
   };
-  // const handleProjectDel = () => {
-  //   const projectDel = axios.delete(
-  //     `${serverURL}/api/projects/delete-projects/:projectId`,
-  //   );
-  // };
 
   useEffect(() => {
     fetchedProject();
@@ -169,7 +157,6 @@ const Projects = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 lg:p-8 font-sans antialiased selection:bg-indigo-500 selection:text-white">
       <div className="max-w-5xl mx-auto space-y-8">
-        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -191,7 +178,6 @@ const Projects = () => {
           </div>
         </motion.div>
 
-        {/* Form Container Card */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -200,9 +186,7 @@ const Projects = () => {
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Two-Column Responsive Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              {/* Left Column: Image Upload & Live Preview */}
               <div className="lg:col-span-5 space-y-3">
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
                   Project Thumbnail <span className="text-indigo-400">*</span>
@@ -256,9 +240,7 @@ const Projects = () => {
                 </p>
               </div>
 
-              {/* Right Column: Title, Description & Links */}
               <div className="lg:col-span-7 space-y-4">
-                {/* Project Title */}
                 <div className="space-y-1.5">
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
                     Project Title <span className="text-indigo-400">*</span>
@@ -277,7 +259,6 @@ const Projects = () => {
                   </div>
                 </div>
 
-                {/* Project Description */}
                 <div className="space-y-1.5">
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
                     Project Description{" "}
@@ -298,7 +279,6 @@ const Projects = () => {
                   </div>
                 </div>
 
-                {/* GitHub Link */}
                 <div className="space-y-1.5">
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
                     GitHub Repository Link
@@ -317,7 +297,6 @@ const Projects = () => {
                   </div>
                 </div>
 
-                {/* Live Demo Link */}
                 <div className="space-y-1.5">
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
                     Live Demo Link
@@ -338,7 +317,6 @@ const Projects = () => {
               </div>
             </div>
 
-            {/* Form Footer Action */}
             <div className="pt-4 border-t border-slate-800/80 flex items-center justify-end">
               <motion.button
                 type="submit"
@@ -360,7 +338,6 @@ const Projects = () => {
           </form>
         </motion.div>
 
-        {/* Existing Projects Section */}
         <div className="space-y-4 pt-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-white tracking-tight">
@@ -392,7 +369,6 @@ const Projects = () => {
                       className="bg-slate-900/80 backdrop-blur-xl border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between"
                     >
                       <div>
-                        {/* Project Thumbnail */}
                         <div className="relative aspect-video w-full bg-slate-950 overflow-hidden">
                           {project.projectImage ? (
                             <img
@@ -407,7 +383,6 @@ const Projects = () => {
                           )}
                         </div>
 
-                        {/* Project Info */}
                         <div className="p-5 space-y-2">
                           <h3 className="text-lg font-bold text-white line-clamp-1">
                             {project.title}
@@ -418,7 +393,6 @@ const Projects = () => {
                         </div>
                       </div>
 
-                      {/* Card Footer: Links & Delete Button */}
                       <div className="px-5 pb-5 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
                         <div className="flex items-center gap-2">
                           {project.gitHub && (
@@ -455,7 +429,6 @@ const Projects = () => {
                           ) : (
                             <FiTrash2 className="w-3.5 h-3.5" />
                           )}
-                          {/* <span onClick={() => handleProjectDel}>Delete</span> */}
                         </button>
                       </div>
                     </motion.div>

@@ -55,11 +55,7 @@ const navGroups = [
         path: "/admin/skills",
         icon: LuWrench,
       },
-      // {
-      //   name: "Educations",
-      //   path: "/admin/education",
-      //   icon: LuGraduationCap,
-      // },
+
       {
         name: "courses & certifications",
         path: "/admin/cert",
@@ -70,11 +66,7 @@ const navGroups = [
         path: "/admin/topics",
         icon: LuBookOpen,
       },
-      // {
-      //   name: "currently learning",
-      //   path: "/admin/currently-learning",
-      //   icon: LuBrain,
-      // },
+
       {
         name: "Reviews",
         path: "/admin/reviews",
@@ -201,7 +193,6 @@ const SideBar = () => {
 
   return (
     <>
-      {/* Mobile menu button */}
       <button
         type="button"
         onClick={() => setMobileOpen(true)}
@@ -212,7 +203,6 @@ const SideBar = () => {
         <LuMenu size={22} />
       </button>
 
-      {/* Mobile backdrop */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.button
@@ -227,7 +217,6 @@ const SideBar = () => {
         )}
       </AnimatePresence>
 
-      {/* Mobile drawer */}
       <motion.aside
         initial={false}
         animate={{ x: mobileOpen ? 0 : "-100%" }}
@@ -241,7 +230,6 @@ const SideBar = () => {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 font-bold text-white">
               Admin
             </div>
-            {/* <span className="font-semibold text-white">Admin Panel</span> */}
           </div>
 
           <button
@@ -263,7 +251,6 @@ const SideBar = () => {
         </div>
       </motion.aside>
 
-      {/* Desktop sidebar */}
       <motion.aside
         initial={false}
         animate={{ width: isCollapsed ? 80 : 260 }}
@@ -280,9 +267,6 @@ const SideBar = () => {
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 font-bold text-white">
                 Admin
               </div>
-              {/* <span className="truncate text-sm font-semibold text-white">
-                Admin Panel
-              </span> */}
             </div>
           )}
 

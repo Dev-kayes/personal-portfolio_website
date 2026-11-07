@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../../redux/userSlice";
 
-// New imports for UI enhancements
 import {
   FiUser,
   FiMail,
@@ -16,9 +15,6 @@ import {
 } from "react-icons/fi";
 
 const Register = () => {
-  // ==========================================
-  // EXISTING LOGIC PRESERVED EXACTLY
-  // ==========================================
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -49,7 +45,6 @@ const Register = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.error(error, "error in register user");
       toast.error(error?.response?.data?.message || "something went wrong");
     } finally {
       setLoading(false);
@@ -61,16 +56,12 @@ const Register = () => {
       navigate("/admin");
     }
   }, [token, navigate]);
-  // ==========================================
 
   return (
     <div className="min-h-screen flex w-full bg-[#F9F9F8] font-sans">
-      {/* LEFT PANEL: Brand Presentation (Hidden on Mobile) */}
       <div className="hidden lg:flex lg:w-1/2 bg-[#0B0F19] relative overflow-hidden flex-col justify-between p-12 lg:p-16 xl:p-24 text-white">
-        {/* Subtle CSS Grid Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:32px_32px]"></div>
 
-        {/* Decorative Abstract Element */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[50%] rounded-full bg-gradient-to-br from-indigo-500/20 to-transparent blur-3xl"></div>
         </div>
@@ -103,10 +94,8 @@ const Register = () => {
         </div>
       </div>
 
-      {/* RIGHT PANEL: Registration Form */}
       <div className="flex-1 flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:max-w-md">
-          {/* Mobile Logo (Visible only on small screens) */}
           <div className="flex lg:hidden items-center gap-3 mb-8">
             <div className="flex items-center justify-center w-10 h-10 bg-slate-900 rounded-lg">
               <FiLayers className="text-xl text-white" />
@@ -124,7 +113,6 @@ const Register = () => {
           </p>
 
           <form onSubmit={registerUserHandler} className="space-y-5">
-            {/* Name Input */}
             <div>
               <label
                 htmlFor="name"
@@ -149,7 +137,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Email Input */}
             <div>
               <label
                 htmlFor="email"
@@ -174,7 +161,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Password Input */}
             <div>
               <label
                 htmlFor="password"
@@ -199,7 +185,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}

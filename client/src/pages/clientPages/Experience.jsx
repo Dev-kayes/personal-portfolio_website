@@ -26,7 +26,6 @@ const Experience = () => {
         setExperiences(response.data.experiences);
       } catch (fetchError) {
         if (controller.signal.aborted) return;
-        console.error("Failed to fetch public experiences:", fetchError);
         setError("Unable to load experience right now.");
       } finally {
         if (!controller.signal.aborted) setLoading(false);

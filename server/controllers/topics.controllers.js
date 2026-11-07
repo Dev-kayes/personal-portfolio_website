@@ -47,7 +47,6 @@ export const addTopic = async (req, res) => {
     try {
       image = await uploadOnCloudinary(req.file.buffer, "portfolio_topics");
     } catch (error) {
-      console.error("Error uploading topic image:", error);
       return res.status(500).json({
         success: false,
         message: "Error uploading topic image.",
@@ -68,7 +67,6 @@ export const addTopic = async (req, res) => {
       topic: newTopic,
     });
   } catch (error) {
-    console.error("Error adding topic:", error);
     if (error.name === "ValidationError") {
       return res.status(400).json({
         success: false,
@@ -93,7 +91,6 @@ export const getAdminTopic = async (req, res) => {
       getAdminTopic,
     });
   } catch (error) {
-    console.error("Error fetching topics:", error);
     return res.status(500).json({
       success: false,
       message: "Internal Server Error.",
@@ -135,7 +132,6 @@ export const deleteTopic = async (req, res) => {
       message: "Topic deleted successfully.",
     });
   } catch (error) {
-    console.error("Error deleting topic:", error);
     if (error.name === "CastError") {
       return res.status(400).json({
         success: false,
@@ -172,7 +168,6 @@ export const getPublicTopics = async (_req, res) => {
       topics,
     });
   } catch (error) {
-    console.error("Error fetching public topics:", error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",

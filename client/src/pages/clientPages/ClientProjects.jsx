@@ -24,17 +24,13 @@ const ClientProjects = ({ limit }) => {
           { signal: controller.signal },
         );
 
-        if (
-          !response.data?.success ||
-          !Array.isArray(response.data.projects)
-        ) {
+        if (!response.data?.success || !Array.isArray(response.data.projects)) {
           throw new Error("The projects response was invalid.");
         }
 
         setProjects(response.data.projects);
       } catch (fetchError) {
         if (controller.signal.aborted) return;
-        console.error("Failed to fetch public projects:", fetchError);
         setError(
           fetchError.response?.data?.message ||
             (fetchError.response
@@ -102,7 +98,9 @@ const ClientProjects = ({ limit }) => {
       ) : projects.length === 0 ? (
         <div className="rounded-2xl border border-slate-800 bg-slate-900/60 px-6 py-12 text-center">
           <FiFolder className="mx-auto h-8 w-8 text-slate-600" />
-          <p className="mt-3 text-sm text-slate-400">Projects will be added soon.</p>
+          <p className="mt-3 text-sm text-slate-400">
+            Projects will be added soon.
+          </p>
         </div>
       ) : (
         <>

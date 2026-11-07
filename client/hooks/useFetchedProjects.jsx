@@ -16,17 +16,16 @@ const usefetchedProjects = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // "Content-Type": "multipart/form-data",
           },
         },
       );
       if (response.data?.success) {
-        console.log("Fetched projects:", response.data.projects);
         dispatch(setProjects(response.data.projects));
       }
     } catch (error) {
-      console.error("Failed to fetch projects:", error);
-      toast.error(error.response?.data?.message || "Error in Fetching Projects");
+      toast.error(
+        error.response?.data?.message || "Error in Fetching Projects",
+      );
     }
   }, [serverURL, token, dispatch]);
   return fetchedProjects;

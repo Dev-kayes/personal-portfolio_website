@@ -52,7 +52,9 @@ const SkillCarousel = ({ skills, label }) => {
           <button
             type="button"
             aria-label={`Previous ${label} technologies`}
-            onClick={() => setPage((currentPage) => Math.max(0, currentPage - 1))}
+            onClick={() =>
+              setPage((currentPage) => Math.max(0, currentPage - 1))
+            }
             disabled={page === 0}
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-indigo-400/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
@@ -100,7 +102,6 @@ const SkillsSection = () => {
         setSkills(response.data.skills);
       } catch (fetchError) {
         if (controller.signal.aborted) return;
-        console.error("Failed to fetch public skills:", fetchError);
         setError("Unable to load skills right now.");
       } finally {
         if (!controller.signal.aborted) setLoading(false);

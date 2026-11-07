@@ -1,4 +1,3 @@
-// Higher Order Component (HOC):
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -11,11 +10,6 @@ const useFetchedUserData = () => {
   const loading = useSelector((state) => state.user.loading);
   React.useEffect(() => {
     const fetchedUserData = async () => {
-      // if (!token) {
-      //   dispatch(setUserData(null));
-      //   dispatch(setLoading(false));
-      //   return;
-      // }
       if (!token || loading) return;
       dispatch(setLoading(true));
       try {
@@ -26,12 +20,10 @@ const useFetchedUserData = () => {
         });
 
         if (response?.data?.success) {
-          console.log(response?.data.data);
           dispatch(setUserData(response?.data?.data));
           dispatch(setLoading(false));
         }
       } catch (error) {
-        console.error(error);
         dispatch(setLoading(false));
       } finally {
         dispatch(setLoading(false));

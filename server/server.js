@@ -12,8 +12,6 @@ import certRoute from "./routes/cert.routes.js";
 import reviewRoute from "./routes/review.routes.js";
 import topicRoute from "./routes/topic.routes.js";
 import contactRoute from "./routes/contact.routes.js";
-// import contactRoute from "./routes/contact.routes.js";
-// import serviceRoute from "./routes/services.routes.js";
 
 const app = express();
 
@@ -35,63 +33,26 @@ app.use(express.urlencoded({ extended: true }));
 
 connectDb();
 
-// Auth:
-// http://localhost:3000/api/auth
-// https://kayesbackend.vercel.app/api/auth
 app.use("/api/auth", authRouter);
-// User:
-// http://localhost:3000/api/user
-// https://kayesbackend.vercel.app/api/user
+
 app.use("/api/user", userRoute);
 
-// Skills:
-// http://localhost:3000/api/skill
-// https://kayesbackend.vercel.app/api/skill
 app.use("/api/skill", skillRoute);
 
-// Projects:
-// http://localhost:3000/api/projects
-// https://kayesbackend.vercel.app/api/projects
 app.use("/api/projects", projectRoute);
 
-// Experience:
-// http://localhost:3000/api/experience
-// https://kayesbackend.vercel.app/api/experience
 app.use("/api/experience", experienceRoute);
 
-// Education:
-// http://localhost:3000/api/cert
-// https://kayesbackend.vercel.app/api/cert
 app.use("/api/cert", certRoute);
 
-// Topics:
-// http://localhost:3000/api/topic
-// https://kayesbackend.vercel.app/api/topic
 app.use("/api/topic", topicRoute);
 
-// Review:
-// http://localhost:3000/api/rev
-// https://kayesbackend.vercel.app/api/rev
 app.use("/api/rev", reviewRoute);
 
-// Contact form:
 app.use("/api/contact", contactRoute);
 
-// Service:
-// http://localhost:3000/api/service
-// https://kayesbackend.vercel.app/api/service
-// app.use("/api/service", serviceRoute);
-
-// Service:
-// http://localhost:3000/api/contact
-// https://kayesbackend.vercel.app/api/contact
-// app.use("/api/contact", contactRoute);
-
-//=====================================================================
 if (process.env.NODE_ENV === "development") {
-  app.listen(process.env.PORT || 9000, () => {
-    console.log("Server is running");
-  });
+  app.listen(process.env.PORT || 9000, () => {});
 }
 
 export default app;

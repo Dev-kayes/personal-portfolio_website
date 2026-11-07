@@ -17,9 +17,8 @@ import {
   MessageSquareQuote,
 } from "lucide-react";
 
-// Configuration constants - adjust paths as needed for your project structure
-const RESUME_URL = "https://myprofessionalresume.netlify.app/"; // Place your resume PDF in the /public folder
-const LOGIN_ROUTE = "/admin/login"; // Your admin login route
+const RESUME_URL = "https://myprofessionalresume.netlify.app/";
+const LOGIN_ROUTE = "/admin/login";
 
 const ClientNavbar = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -52,7 +51,6 @@ const ClientNavbar = () => {
         setHasExperience(response.data.experiences.length > 0);
       } catch (error) {
         if (controller.signal.aborted) return;
-        console.error("Failed to check public experiences:", error);
         setHasExperience(false);
       }
     };
@@ -61,14 +59,12 @@ const ClientNavbar = () => {
     return () => controller.abort();
   }, []);
 
-  // Main Nav Links
   const mainNavItems = [
     { name: "Home", href: "#home", id: "home", icon: Home },
     { name: "Projects", href: "#projects", id: "projects", icon: Briefcase },
     { name: "Contact", href: "#contact", id: "contact", icon: Mail },
   ];
 
-  // Dropdown Items under "More"
   const moreNavItems = [
     {
       name: "Experience",
@@ -107,7 +103,6 @@ const ClientNavbar = () => {
     (item) => item.id !== "experience" || hasExperience,
   );
 
-  // Detect active section on scroll using Intersection Observer
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -149,7 +144,6 @@ const ClientNavbar = () => {
     };
   }, []);
 
-  // Keyboard navigation & click outside listener for dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -173,7 +167,6 @@ const ClientNavbar = () => {
     };
   }, []);
 
-  // Dropdown hover helpers with debounce to prevent erratic closing
   const handleMouseEnter = () => {
     if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
     setIsDropdownOpen(true);
@@ -205,7 +198,6 @@ const ClientNavbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* ================= LEFT: Logo ================= */}
           <div className="flex-shrink-0">
             <a
               href="#home"
@@ -216,26 +208,22 @@ const ClientNavbar = () => {
             </a>
           </div>
 
-          {/* ================= CENTER: Desktop Navigation ================= */}
           <nav
             className="hidden md:flex items-center space-x-1 lg:space-x-2"
             aria-label="Main Navigation"
           >
-            {/* 1. Home */}
             <NavLink
               item={mainNavItems[0]}
               isActive={activeSection === mainNavItems[0].id}
               onClick={() => handleNavClick(mainNavItems[0].id)}
             />
 
-            {/* 2. Projects */}
             <NavLink
               item={mainNavItems[1]}
               isActive={activeSection === mainNavItems[1].id}
               onClick={() => handleNavClick(mainNavItems[1].id)}
             />
 
-            {/* 3. More Dropdown */}
             <div
               className="relative"
               ref={dropdownRef}
@@ -262,7 +250,6 @@ const ClientNavbar = () => {
                   }`}
                 />
 
-                {/* Hover Underline */}
                 <span
                   className={`absolute bottom-0 left-3.5 right-3.5 h-0.5 bg-blue-500 transform origin-left transition-transform duration-300 ease-out ${
                     isMoreActive
@@ -272,7 +259,6 @@ const ClientNavbar = () => {
                 />
               </button>
 
-              {/* Dropdown Menu */}
               <div
                 className={`absolute left-0 mt-2 w-64 rounded-xl bg-slate-900 border border-slate-800 shadow-xl shadow-black/50 py-2 transition-all duration-200 origin-top-left z-50 ${
                   isDropdownOpen
@@ -300,7 +286,6 @@ const ClientNavbar = () => {
                       />
                       <span>{subItem.name}</span>
 
-                      {/* Submenu hover line */}
                       <span
                         className={`absolute bottom-1 left-4 right-4 h-0.5 bg-blue-500 transform origin-left transition-transform duration-200 ${
                           isSubActive
@@ -314,7 +299,6 @@ const ClientNavbar = () => {
               </div>
             </div>
 
-            {/* 4. Contact */}
             <NavLink
               item={mainNavItems[2]}
               isActive={activeSection === mainNavItems[2].id}
@@ -322,9 +306,7 @@ const ClientNavbar = () => {
             />
           </nav>
 
-          {/* ================= RIGHT: Desktop Action Buttons ================= */}
           <div className="hidden md:flex items-center space-x-3">
-            {/* Resume Button */}
             <a
               href={RESUME_URL}
               target="_blank"
@@ -335,7 +317,6 @@ const ClientNavbar = () => {
               <span>Resume</span>
             </a>
 
-            {/* Login Button */}
             <a
               href={LOGIN_ROUTE}
               className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all duration-200 shadow-md shadow-blue-600/20 hover:shadow-blue-600/40 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-slate-950"
@@ -345,7 +326,6 @@ const ClientNavbar = () => {
             </a>
           </div>
 
-          {/* ================= MOBILE: Hamburger Button ================= */}
           <div className="flex md:hidden">
             <button
               type="button"
@@ -364,7 +344,6 @@ const ClientNavbar = () => {
         </div>
       </div>
 
-      {/* ================= MOBILE: Collapsible Drawer ================= */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           isMobileMenuOpen
@@ -373,7 +352,6 @@ const ClientNavbar = () => {
         }`}
       >
         <div className="px-4 pt-3 pb-6 space-y-2 bg-slate-950/95 backdrop-blur-xl">
-          {/* Main items */}
           {mainNavItems.slice(0, 2).map((item) => (
             <MobileNavLink
               key={item.id}
@@ -383,7 +361,6 @@ const ClientNavbar = () => {
             />
           ))}
 
-          {/* Collapsible Mobile More Menu */}
           <div className="pt-1 pb-1">
             <button
               type="button"
@@ -406,7 +383,6 @@ const ClientNavbar = () => {
               </span>
             </button>
 
-            {/* Mobile Submenu links */}
             <div
               className={`pl-6 space-y-1 mt-1 transition-all duration-200 ${
                 isMobileMoreOpen ? "block" : "hidden"
@@ -423,14 +399,12 @@ const ClientNavbar = () => {
             </div>
           </div>
 
-          {/* Contact Link */}
           <MobileNavLink
             item={mainNavItems[2]}
             isActive={activeSection === mainNavItems[2].id}
             onClick={() => handleNavClick(mainNavItems[2].id)}
           />
 
-          {/* Mobile Buttons */}
           <div className="pt-4 border-t border-slate-800/80 grid grid-cols-2 gap-3">
             <a
               href={RESUME_URL}
@@ -455,7 +429,6 @@ const ClientNavbar = () => {
   );
 };
 
-// Helper component for Desktop Navigation Links
 const NavLink = ({ item, isActive, onClick }) => {
   return (
     <a
@@ -469,7 +442,6 @@ const NavLink = ({ item, isActive, onClick }) => {
     >
       <span>{item.name}</span>
 
-      {/* Animated Underline */}
       <span
         className={`absolute bottom-0 left-3.5 right-3.5 h-0.5 bg-blue-500 transform origin-left transition-transform duration-300 ease-out ${
           isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
@@ -479,7 +451,6 @@ const NavLink = ({ item, isActive, onClick }) => {
   );
 };
 
-// Helper component for Mobile Navigation Links
 const MobileNavLink = ({ item, isActive, onClick }) => {
   const Icon = item.icon;
   return (

@@ -47,7 +47,6 @@ const ClientContact = () => {
         message: response.data.message || "Your message has been sent.",
       });
     } catch (error) {
-      console.error("Failed to send contact message:", error);
       const canUseEmailFallback =
         !error.response || error.response.status >= 500;
       const emailSubject = encodeURIComponent(

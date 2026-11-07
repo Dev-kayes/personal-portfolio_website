@@ -8,7 +8,6 @@ import { FiLogOut, FiHexagon } from "react-icons/fi";
 const Navbar = () => {
   const dispatch = useDispatch();
 
-  // Your existing logic is preserved exactly as it was
   const handleLogOut = () => {
     localStorage.removeItem("token");
     dispatch(setToken(null));
@@ -17,14 +16,11 @@ const Navbar = () => {
 
   return (
     <nav className="w-full h-16 bg-gray-900 border-b border-gray-800 flex items-center justify-between px-4 sm:px-6 lg:px-8 sticky top-0 z-50 shadow-md">
-      {/* Left Side: Brand & Context */}
       <div className="flex items-center gap-3 sm:gap-4">
-        {/* Mock Logo Mark */}
         <div className="flex items-center justify-center w-8 h-8 bg-gray-800 text-indigo-400 rounded-lg border border-gray-700 shadow-sm">
           <FiHexagon className="text-xl" />
         </div>
 
-        {/* Brand Text & Badge */}
         <div className="flex items-baseline gap-3">
           <h1 className="text-lg font-semibold text-white tracking-tight">
             Portfolio
@@ -35,7 +31,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Right Side: User Actions */}
       <div className="flex items-center gap-2">
         <button
           onClick={handleLogOut}

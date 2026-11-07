@@ -20,7 +20,6 @@ const useFetchedSkills = () => {
         dispatch(setSkills(response.data.skills));
       }
     } catch (error) {
-      console.error("Failed to fetch skills:", error);
       toast.error(error.response?.data?.message || "Error in Fetching Skills");
     }
   }, [serverURL, token, dispatch]);

@@ -4,7 +4,6 @@ import UserModel from "../models/user.Model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// http://localhost:3000/api/auth/register
 export const registerUser = async (req, res) => {
   try {
     if (process.env.ALLOW_ADMIN_REGISTER !== true) {
@@ -60,40 +59,13 @@ export const registerUser = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error("REGISTER ERROR:", error);
-    console.error("ERROR MESSAGE:", error.message);
-
     return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
-// export const registerUser = async (req, res) => {
-//   try {
-//     console.log("Register API called!");
 
-//     console.log(
-//       "ALLOW_ADMIN_REGISTER:",
-//       JSON.stringify(process.env.ALLOW_ADMIN_REGISTER),
-//     );
-
-//     if (process.env.ALLOW_ADMIN_REGISTER !== "true") {
-//       return res.status(403).json({
-//         success: false,
-//         message: "Admin registration is disabled",
-//       });
-//     }
-
-//     console.log("Registration is enabled!");
-
-//     // বাকি registration code
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
-// http://localhost:3000/api/auth/login
 export const loginUser = async (req, res) => {
   try {
     let { email, password } = req.body;
@@ -131,7 +103,6 @@ export const loginUser = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error(error, "in login user");
     res
       .status(500)
       .json({ success: false, message: "Server error!", data: error });

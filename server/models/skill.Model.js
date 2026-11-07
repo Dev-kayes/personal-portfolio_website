@@ -12,7 +12,6 @@ const skillSchema = mongoose.Schema(
       enum: ["FrontEnd", "BackEnd", "Database", "Tools & others"],
     },
     skillName: { type: String, required: true },
-    // skillLevel: { type: Number, required: true },
     skillImage: { type: String, required: true },
   },
   { timestamps: true },

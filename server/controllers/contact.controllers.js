@@ -55,8 +55,12 @@ export const sendContactMessage = async (req, res) => {
     SMTP_SECURE,
   } = process.env;
   const smtpPort = Number(SMTP_PORT);
-  if (!SMTP_USER || !SMTP_PASS || !Number.isInteger(smtpPort) || smtpPort <= 0) {
-    console.error("Contact email is not configured: SMTP settings are missing.");
+  if (
+    !SMTP_USER ||
+    !SMTP_PASS ||
+    !Number.isInteger(smtpPort) ||
+    smtpPort <= 0
+  ) {
     return res.status(503).json({
       success: false,
       message: "The contact form is temporarily unavailable.",
@@ -96,7 +100,6 @@ export const sendContactMessage = async (req, res) => {
       message: "Your message has been sent successfully.",
     });
   } catch (error) {
-    console.error("Failed to send contact email:", error);
     return res.status(500).json({
       success: false,
       message: "Unable to send your message right now. Please try again later.",

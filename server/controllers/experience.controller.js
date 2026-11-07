@@ -2,9 +2,6 @@ import mongoose from "mongoose";
 import UserModel from "../models/user.Model.js";
 import experienceModel from "./../models/experience.Model.js";
 
-// Add experience:
-// http://localhost:3000/api/experience/add-exp
-// https://kayesbackend.vercel.app/api/experience/add-exp
 export const addExperience = async (req, res) => {
   try {
     const userId = req.userId;
@@ -52,16 +49,12 @@ export const addExperience = async (req, res) => {
       experience,
     });
   } catch (error) {
-    console.error("Error adding experience:", error);
     return res
       .status(500)
       .json({ success: false, message: "Internal Server Error" });
   }
 };
 
-// Get admin experience:
-// http://localhost:3000/api/experience/get-admin-exp
-// https://kayesbackend.vercel.app/api/experience/get-admin-exp
 export const getAdminExperience = async (req, res) => {
   try {
     const experiences = await experienceModel
@@ -73,7 +66,6 @@ export const getAdminExperience = async (req, res) => {
       experiences,
     });
   } catch (error) {
-    console.error("Error fetching experiences:", error);
     return res
       .status(500)
       .json({ success: false, message: "Internal Server Error" });
@@ -98,16 +90,12 @@ export const getPublicExperience = async (_req, res) => {
 
     return res.status(200).json({ success: true, experiences });
   } catch (error) {
-    console.error("Error fetching public experiences:", error);
     return res
       .status(500)
       .json({ success: false, message: "Internal Server Error." });
   }
 };
 
-// Delete experience:
-// http://localhost:3000/api/experience/del-exp/:expId
-// https://kayesbackend.vercel.app/api/experience/del-exp/:expId
 export const deleteExperience = async (req, res) => {
   try {
     const { expId } = req.params;
@@ -134,7 +122,6 @@ export const deleteExperience = async (req, res) => {
       message: "Experience deleted successfully.",
     });
   } catch (error) {
-    console.error("Error deleting experience:", error);
     return res
       .status(500)
       .json({ success: false, message: "Internal Server Error" });

@@ -51,7 +51,6 @@ const ClientBanner = () => {
         }
       } catch (error) {
         if (controller.signal.aborted) return;
-        console.error("Failed to fetch public profile:", error);
       }
     };
 
@@ -67,7 +66,6 @@ const ClientBanner = () => {
         }
       } catch (error) {
         if (controller.signal.aborted) return;
-        console.error("Failed to fetch banner skills:", error);
       }
     };
 
@@ -80,7 +78,6 @@ const ClientBanner = () => {
   return (
     <div className="w-full">
       <div className="grid min-h-[calc(100svh-5rem)] w-full grid-cols-1 items-center gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-12 lg:py-12 xl:px-16">
-        {/* Profile Information */}
         <div className="mx-auto w-full max-w-4xl space-y-5 text-center lg:mx-0 lg:text-left">
           <p className="text-sm font-medium tracking-[0.12em] text-slate-300 sm:text-base">
             Hi, I'm {profile?.name || "Kayes Molla"}
@@ -96,7 +93,6 @@ const ClientBanner = () => {
             {profile?.intro}
           </p>
 
-          {/* About Me */}
           {profile?.description && (
             <div className="max-w-3xl space-y-2 text-slate-300">
               <h2 className="text-lg font-semibold text-white">About me</h2>
@@ -107,7 +103,6 @@ const ClientBanner = () => {
             </div>
           )}
 
-          {/* Availability Status */}
           {typeof profile?.isAvailable === "boolean" && (
             <p
               className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm ${
@@ -128,7 +123,6 @@ const ClientBanner = () => {
             </p>
           )}
 
-          {/* Contact Information */}
           {(profile?.email ||
             profile?.phone ||
             profile?.whatsAppNumber ||
@@ -175,7 +169,6 @@ const ClientBanner = () => {
             </div>
           )}
 
-          {/* Social Profiles */}
           {socialLinks.some(({ key }) => profile?.[key]?.trim()) && (
             <nav
               aria-label="Social media links"
@@ -199,7 +192,6 @@ const ClientBanner = () => {
             </nav>
           )}
 
-          {/* Action Buttons */}
           <div className="flex flex-wrap justify-center gap-3 pt-1 lg:justify-start">
             <a
               href="#projects"
@@ -217,7 +209,6 @@ const ClientBanner = () => {
           </div>
         </div>
 
-        {/* Profile Picture */}
         <div className="mx-auto flex aspect-square w-full max-w-[16rem] items-center justify-center overflow-hidden rounded-full border-4 border-indigo-400/30 bg-slate-900 shadow-2xl shadow-indigo-950/40 sm:max-w-[20rem] lg:max-w-none lg:w-[min(100%,30rem)]">
           {profile?.profilePic ? (
             <img
@@ -236,7 +227,6 @@ const ClientBanner = () => {
         </div>
       </div>
 
-      {/* Skills Marquee */}
       {skills.length > 0 && (
         <section
           aria-label="Technologies I work with"

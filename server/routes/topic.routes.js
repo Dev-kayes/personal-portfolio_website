@@ -18,7 +18,10 @@ const uploadTopicImage = (req, res, next) => {
       return;
     }
 
-    if (error instanceof multer.MulterError && error.code === "LIMIT_FILE_SIZE") {
+    if (
+      error instanceof multer.MulterError &&
+      error.code === "LIMIT_FILE_SIZE"
+    ) {
       return res.status(400).json({
         success: false,
         message: "Topic image must be 5 MB or smaller.",
@@ -29,7 +32,6 @@ const uploadTopicImage = (req, res, next) => {
       return res.status(400).json({ success: false, message: error.message });
     }
 
-    console.error("Error processing topic image:", error);
     return res.status(400).json({
       success: false,
       message: "Topic image could not be uploaded.",

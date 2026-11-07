@@ -36,7 +36,6 @@ const ClientFooter = () => {
         }
       } catch (error) {
         if (controller.signal.aborted) return;
-        console.error("Failed to fetch footer social links:", error);
       }
     };
 

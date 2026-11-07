@@ -7,13 +7,12 @@ export const isAuth = (req, res, next) => {
       return res
         .status(404)
         .json({ success: false, message: "Token not found" });
-    const decode = jwt.verify(token, process.env.JWT_SECRET); // verify token
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
     if (!decode)
       return res.status(404).json({ success: false, message: "Unauthorized" });
     req.userId = decode.id;
     next();
   } catch (error) {
-    console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };

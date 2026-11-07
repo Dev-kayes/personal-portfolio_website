@@ -82,7 +82,6 @@ const Skills = () => {
         if (fileInput) fileInput.value = "";
       }
     } catch (error) {
-      console.error(error);
       toast.error(
         error?.response?.data?.message ||
           "Something went wrong while adding the skill.",
@@ -99,7 +98,6 @@ const Skills = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 lg:p-8 font-sans antialiased">
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -121,9 +119,7 @@ const Skills = () => {
           </div>
         </motion.div>
 
-        {/* Dashboard Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Add Skill Form */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -135,7 +131,6 @@ const Skills = () => {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Image Input */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-medium text-slate-400">
                   Icon / Image
@@ -162,7 +157,6 @@ const Skills = () => {
                 </div>
               </div>
 
-              {/* Skill Name */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-medium text-slate-400">
                   Skill Name
@@ -176,7 +170,6 @@ const Skills = () => {
                 />
               </div>
 
-              {/* Skill Section Dropdown */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-medium text-slate-400">
                   Skill Section / Category
@@ -193,7 +186,6 @@ const Skills = () => {
                 </select>
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={loading}
@@ -211,7 +203,6 @@ const Skills = () => {
             </form>
           </motion.div>
 
-          {/* Skills Grid */}
           <div className="lg:col-span-8">
             {skills && skills.length > 0 ? (
               <div className="max-h-[60vh] overflow-y-auto overscroll-contain pr-2 lg:max-h-[calc(100svh-15rem)]">

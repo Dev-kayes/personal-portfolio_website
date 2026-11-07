@@ -2,8 +2,6 @@ import UserModel from "../models/user.Model.js";
 import SkillModel from "./../models/skill.Model.js";
 import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
 
-// http://localhost:3000/api/skill/add-skill
-// https://kayesbackend.vercel.app/api/skill/add-skill
 export const addSkill = async (req, res) => {
   try {
     const userId = req.userId;
@@ -41,7 +39,6 @@ export const addSkill = async (req, res) => {
         "portfolio_profiles",
       );
     } catch (error) {
-      console.error(error);
       return res
         .status(500)
         .json({ success: false, message: "Error in uploading image" });
@@ -57,7 +54,6 @@ export const addSkill = async (req, res) => {
       .status(201)
       .json({ success: true, message: "Skill added successfully", skill });
   } catch (error) {
-    console.error(error, "error in add skill");
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
@@ -102,7 +98,6 @@ export const updateSkill = async (req, res) => {
           "portfolio_profiles",
         );
       } catch (error) {
-        console.error(error);
         return res
           .status(500)
           .json({ success: false, message: "Error in uploading image" });
@@ -117,42 +112,12 @@ export const updateSkill = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Skill updated successfully", skill });
   } catch (error) {
-    console.error(error, "error in update skill");
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
   }
 };
 
-// http://localhost:3000/api/skill/delete-skill
-// https://kayesbackend.vercel.app/api/skill/delete-skill/:id
-// export const deleteSkill = async (req, res) => {
-//   try {
-//     const userId = req.userId;
-//     const skillId = req.params.id;
-//     const user = await UserModel.findById(userId);
-//     if (!user) {
-//       return res
-//         .status(404)
-//         .json({ success: false, message: "User not found" });
-//     }
-//     const skill = await SkillModel.findByIdAndDelete({ _id: skillId });
-//     if (!skill) {
-//       res
-//         .status(404)
-//         .json({ success: false, message: "Skill not found", skill });
-//     }
-//     res
-//       .status(200)
-//       .json({ success: true, message: "Skill deleted successfully", skill });
-//   } catch (error) {
-//     console.error(error, "error in delete skill");
-//     res.status(500).json({ success: false, message: "Internal server error" });
-//   }
-// };
-
-// http://localhost:3000/api/skill/get-all-skill
-// https://kayesbackend.vercel.app/api/skill/get-all-skill
 export const getAllSkillByAdmin = async (req, res) => {
   try {
     const userId = req.userId;
@@ -167,7 +132,6 @@ export const getAllSkillByAdmin = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Skills found", skills });
   } catch (error) {
-    console.error(error, "error in get admin skills");
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -190,7 +154,6 @@ export const getPublicSkills = async (_req, res) => {
       .sort({ createdAt: -1 });
     return res.status(200).json({ success: true, skills });
   } catch (error) {
-    console.error(error, "error in get public skills");
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });

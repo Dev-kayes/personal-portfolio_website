@@ -26,7 +26,6 @@ export const addReview = async (req, res) => {
       .status(201)
       .json({ success: true, message: "Review added successfully", review });
   } catch (error) {
-    console.error(error, "error in add review");
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -40,7 +39,6 @@ export const getAllReview = async (_req, res) => {
       .status(200)
       .json({ success: true, message: "Reviews found", reviews });
   } catch (error) {
-    console.error(error, "error in get all reviews");
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -67,7 +65,6 @@ export const deleteReview = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Review deleted successfully" });
   } catch (error) {
-    console.error(error, "error in delete review");
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });

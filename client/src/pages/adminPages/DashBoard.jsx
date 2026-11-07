@@ -93,7 +93,6 @@ const DashBoard = () => {
           setExperiences(response.data.experiences || []);
         }
       } catch (error) {
-        console.error("Failed to fetch dashboard experiences:", error);
         toast.error(
           error.response?.data?.message || "Could not load experience summary.",
         );
@@ -342,9 +341,7 @@ const DashBoard = () => {
       <section className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5 sm:p-6">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-base font-semibold text-white">
-              Quick access
-            </h2>
+            <h2 className="text-base font-semibold text-white">Quick access</h2>
             <p className="mt-1 text-xs text-zinc-500">
               Jump straight to a portfolio section
             </p>

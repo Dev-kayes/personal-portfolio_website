@@ -25,27 +25,46 @@ export const addCert = async (req, res) => {
       : typeof topicsCovered === "string"
         ? topicsCovered.split(",")
         : [];
-    const normalizedTopics = topics.map((topic) => topic.trim()).filter(Boolean);
+    const normalizedTopics = topics
+      .map((topic) => topic.trim())
+      .filter(Boolean);
 
-    if (!institution || !title || !normalizedTopics.length || !link || !startDate) {
+    if (
+      !institution ||
+      !title ||
+      !normalizedTopics.length ||
+      !link ||
+      !startDate
+    ) {
       return res
         .status(400)
-        .json({ success: false, message: "All required fields must be provided." });
+        .json({
+          success: false,
+          message: "All required fields must be provided.",
+        });
     }
     if (!req.file) {
       return res
         .status(400)
-        .json({ success: false, message: "Please upload a certificate image." });
+        .json({
+          success: false,
+          message: "Please upload a certificate image.",
+        });
     }
 
     let image;
     try {
-      image = await uploadOnCloudinary(req.file.buffer, "portfolio_certificates");
+      image = await uploadOnCloudinary(
+        req.file.buffer,
+        "portfolio_certificates",
+      );
     } catch (error) {
-      console.error(error, "Error uploading certificate image");
       return res
         .status(500)
-        .json({ success: false, message: "Error uploading certificate image." });
+        .json({
+          success: false,
+          message: "Error uploading certificate image.",
+        });
     }
 
     const cert = await certModel.create({
@@ -65,7 +84,6 @@ export const addCert = async (req, res) => {
       cert,
     });
   } catch (error) {
-    console.error(error, "Error in Add Certificate");
     if (error.name === "ValidationError") {
       return res.status(400).json({
         success: false,
@@ -74,7 +92,10 @@ export const addCert = async (req, res) => {
     }
     return res
       .status(500)
-      .json({ success: false, message: "Internal server error while saving certificate." });
+      .json({
+        success: false,
+        message: "Internal server error while saving certificate.",
+      });
   }
 };
 
@@ -97,7 +118,6 @@ export const getAdminCert = async (req, res) => {
       getAdminCert,
     });
   } catch (error) {
-    console.error(error, "Error in Getting Admin Certificates");
     return res.status(500).json("Internal Server Error!");
   }
 };
@@ -122,7 +142,6 @@ export const getPublicCert = async (_req, res) => {
 
     return res.status(200).json({ success: true, certificates });
   } catch (error) {
-    console.error("Error fetching public certificates:", error);
     return res
       .status(500)
       .json({ success: false, message: "Unable to load certificates." });
