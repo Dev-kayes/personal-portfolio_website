@@ -1,16 +1,57 @@
-# React + Vite
+# Portfolio Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The client is a React single-page application built with Vite. It contains the public portfolio and the `/admin` content-management interface.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js and npm
+- The portfolio API running locally or a deployed API URL
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+From this directory, install dependencies and configure the API URL:
 
-## Expanding the ESLint configuration
+```powershell
+npm install
+Copy-Item .env.example .env
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Set `VITE_SERVER_URI` in `.env` to the server's base URL. The server defaults to `http://localhost:9000` in local development, so use:
+
+```dotenv
+VITE_SERVER_URI=http://localhost:9000
+```
+
+Vite reads this value when it starts or builds the app. Restart the dev server after changing it.
+
+## Run locally
+
+```powershell
+npm run dev
+```
+
+Vite prints the local URL when it starts (normally `http://localhost:5173`).
+
+## Build and preview
+
+```powershell
+npm run build
+npm run preview
+```
+
+The production build is written to `dist/`.
+
+## Other scripts
+
+```powershell
+npm run lint
+```
+
+## Main routes
+
+- `/` — Public portfolio
+- `/projects` — Projects
+- `/admin/login` — Admin sign-in
+- `/admin` — Admin dashboard and portfolio management
+
+The client calls the API under `/api` using `VITE_SERVER_URI`. The server's CORS configuration currently allows `http://localhost:5173` and the deployed portfolio origin.
