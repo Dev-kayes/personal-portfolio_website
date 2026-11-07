@@ -10,7 +10,7 @@ const initialForm = {
   website: "",
 };
 
-const contactEmail = "devkayesmolla@gmail.com";
+const contactEmail = "dev.kayes27@gmail.com";
 
 const ClientContact = () => {
   const [form, setForm] = useState(initialForm);
@@ -92,7 +92,7 @@ const ClientContact = () => {
           </span>
           <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Let&apos;s build something{" "}
-            <span className="bg-gradient-to-r from-indigo-300 to-cyan-300 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-indigo-300 to-cyan-300 bg-clip-text text-transparent">
               together
             </span>
           </h2>
@@ -103,9 +103,9 @@ const ClientContact = () => {
 
           <a
             href={`mailto:${contactEmail}`}
-            className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-indigo-200 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-300"
+            className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-indigo-200 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-300"
           >
-            devkayesmolla@gmail.com
+            dev.kayes27@gmail.com
             <FiArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </a>
         </header>
@@ -179,7 +179,7 @@ const ClientContact = () => {
 
           <div
             aria-hidden="true"
-            className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+            className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden"
           >
             <label htmlFor="contact-website">Leave this field empty</label>
             <input

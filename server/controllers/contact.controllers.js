@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const recipient = "devkayesmolla@gmail.com";
+const recipient = "dev.kayes27@gmail.com";
 
 export const sendContactMessage = async (req, res) => {
   const { name, email, subject, message, website } = req.body || {};
